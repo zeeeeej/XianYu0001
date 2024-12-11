@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_logo_margin_top">100dp</dimen>
+    <dimen name="login_logo_margin_left_and_right">45.5dp</dimen>
+    <dimen name="login_btn_height">50dp</dimen>
+    <dimen name="login_btn_margin_left_and_right">40dp</dimen>
+    <dimen name="login_btn_margin_top">0dp</dimen>
+    <dimen name="login_btn">16sp</dimen>
+    <dimen name="login_agreement_privacy_margin_top">20dp</dimen>
+    <dimen name="home_tab_size">27dp</dimen>
+    <dimen name="home_tab_text">12sp</dimen>
+    <dimen name="common_elevation">10dp</dimen>
+</resources>

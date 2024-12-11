@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">ShuiMuKeTing</string>
+    <string name="login_btn">微信一键登录</string>
+    <string name="login_agreement_privacy_prefix">我已阅读并同意</string>
+    <string name="login_agreement">《用户协议》</string>
+    <string name="login_privacy">《隐私协议》</string>
+    <string name="login_agreement_privacy_and">和</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_btn_doing">登录中...</string>
+    <string name="home_tab_offline">线下</string>
+    <string name="home_tab_online">线上</string>
+    <string name="home_tab_todo">待参加</string>
+    <string name="home_tab_mine">我的</string>
 </resources>
