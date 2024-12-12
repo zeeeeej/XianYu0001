@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_offline"
+        android:icon="@drawable/main_tab_offline"
+        android:title="@string/home_tab_offline" />
+
+    <item
+        android:id="@+id/tab_online"
+        android:icon="@drawable/main_tab_online"
+        android:title="@string/home_tab_online" />
+
+    <item
+        android:id="@+id/tab_todo"
+        android:icon="@drawable/main_tab_todo"
+        android:title="@string/home_tab_todo" />
+
+    <item
+        android:id="@+id/tab_mine"
+        android:icon="@drawable/main_tab_mine"
+        android:title="@string/home_tab_mine" />
+</menu>

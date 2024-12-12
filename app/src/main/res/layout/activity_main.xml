@@ -13,39 +13,33 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/home_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp"
+            android:text=""
+            android:textColor="@color/text_ff383838"
+            android:textSize="16sp"
+            tools:text="@string/home_tab_offline" />
+
         <!-- page -->
-        <FrameLayout
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/home_vp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragment_container_home_tab_page_offline"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragment_container_home_tab_page_online"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragment_container_home_tab_page_todo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/fragment_container_home_tab_page_mine"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="invisible" />
-        </FrameLayout>
+            android:layout_weight="1" />
 
 
         <!-- tabs -->
+        <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:menu="@menu/main_bottom_tab"-->
+        <!--            style="@style/CustomBottomNavigationView"-->
+        <!--            />-->
+
         <LinearLayout
             android:id="@+id/home_tab"
             android:layout_width="match_parent"
@@ -125,7 +119,7 @@
                     android:id="@+id/home_tab_todo_icon"
                     android:layout_width="@dimen/home_tab_size"
                     android:layout_height="@dimen/home_tab_size"
-                    android:src="@mipmap/ic_home_tab_todo_sel" />
+                    android:src="@mipmap/ic_home_tab_todo" />
 
                 <TextView
                     android:id="@+id/home_tab_todo_text"

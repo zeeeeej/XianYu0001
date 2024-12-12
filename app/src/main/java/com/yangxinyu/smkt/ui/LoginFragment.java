@@ -4,11 +4,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -87,7 +84,7 @@ public class LoginFragment extends BaseFragment {
         commitView.setOnClickListener((v) -> {
             if (checked) {
                 updateCommitButton(true);
-                DefaultRepository.getInstance().login(new DefaultRepository.LoginCallback() {
+                DefaultRepository.getInstance().checkLogin(new DefaultRepository.LoginCallback() {
                     @Override
                     public void onSuccess(User user) {
                         runOnUiThread(() -> {

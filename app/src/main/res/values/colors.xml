@@ -7,4 +7,8 @@
     <color name="login_btn">#ff292f46</color>
     <color name="home_tab_text">#ffbcbcbc</color>
     <color name="home_tab_text_sel">#ff292f46</color>
+    <color name="text_ff383838">#ff383838</color>
+    <color name="text_ff292f46">#ff292f46</color>
+    <color name="vip">#FFF0D3A1</color>
+    <color name="mine_item_text">#ff333333</color>
 </resources>

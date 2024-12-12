@@ -1,7 +1,12 @@
 package com.yangxinyu.smkt.model;
 
+import com.yangxinyu.smkt.model.entity.MyActivity;
 import com.yangxinyu.smkt.model.entity.User;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -9,27 +14,32 @@ import java.util.Random;
  * 进行真正的数据处理
  */
 public class DefaultRepository {
-
-    public static final String DEFAULT_USER = "yangxinyu";
+    private final Datasource datasource = new DefaultDatasource();
     private final Random random = new Random();
-    private User user;
 
     public static DefaultRepository getInstance() {
         return Holder.INSTANCE;
     }
 
-    public boolean isLogin() {
-        return user != null;
+    public boolean checkLogin() {
+        return datasource.user() == null;
     }
 
-    public void login(LoginCallback callback) {
+    public User getUser() {
+        return datasource.user();
+    }
+
+    public @NotNull List<MyActivity> getDoneActivities() {
+        User user = getUser();
+        return user == null ? new ArrayList<>() : datasource.allDoneActivitiesByUserId(user.getId());
+    }
+
+    public void checkLogin(LoginCallback callback) {
         new Thread(() -> {
             try {
                 Thread.sleep(1000);
-
                 if (random.nextBoolean()) {
-                    user = new User(DEFAULT_USER);
-                    callback.onSuccess(user);
+                    callback.onSuccess(getUser());
                 } else {
                     callback.onFail("登录失败");
                 }

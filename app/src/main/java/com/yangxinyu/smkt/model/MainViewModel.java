@@ -28,7 +28,7 @@ public class MainViewModel extends ViewModel {
         LoginStatus loginStatus = new LoginStatus();
         loginStatus.setDoing(true);
         _loginStatusLiveData.setValue(loginStatus);
-        repository.login(new DefaultRepository.LoginCallback() {
+        repository.checkLogin(new DefaultRepository.LoginCallback() {
             @Override
             public void onSuccess(User user) {
                 loginStatus.setSuccess(true);

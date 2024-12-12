@@ -1,112 +1,472 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".LoginActivity">
 
-    <!-- 返回 -->
-    <ImageView
-        android:padding="16dp"
-        android:id="@+id/login_back"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@mipmap/ic_common_back"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- 背景1 -->
-    <ImageView
-        android:padding="16dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@mipmap/ic_common_back"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- logo -->
-    <ImageView
-        android:id="@+id/login_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/login_logo_margin_left_and_right"
-        android:layout_marginTop="@dimen/login_logo_margin_top"
-        android:layout_marginRight="@dimen/login_logo_margin_left_and_right"
-        android:src="@mipmap/ic_login_logo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- 按钮 -->
-    <Button
-        android:id="@+id/login_commit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/login_btn_height"
-        android:layout_marginLeft="@dimen/login_btn_margin_left_and_right"
-        android:layout_marginTop="@dimen/login_btn_margin_top"
-        android:layout_marginRight="@dimen/login_btn_margin_left_and_right"
-        android:backgroundTint="@color/login_btn"
-        android:text="mine"
-        android:textColor="@color/white"
-        android:textSize="@dimen/login_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_logo"/>
-
-    <!-- 用户协议&隐私 -->
-
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/login_agreement_privacy_margin_top"
-        app:layout_constraintLeft_toLeftOf="@id/login_commit"
-        app:layout_constraintRight_toRightOf="@id/login_commit"
-        app:layout_constraintTop_toBottomOf="@id/login_commit">
-
-        <ImageView
-            android:src="@drawable/login_check_bg"
-            android:id="@+id/login_check"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:padding="4dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- 用户信息 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login_agreement_privacy_prefix"
-            android:textColor="@color/login_agree_privacy_ext"
-            android:textSize="13sp" />
+            android:paddingStart="@dimen/mine_common_margin"
+            android:paddingTop="@dimen/mine_common_margin"
+            android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/mine_common_margin">
 
-        <TextView
-            android:id="@+id/login_agreement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_agreement"
-            android:textColor="@color/login_agree_privacy"
-            android:textSize="13sp" />
+            <ImageView
+                android:id="@+id/mine_icon"
+                android:layout_width="@dimen/mine_img_size"
+                android:layout_height="@dimen/mine_img_size"
+                android:src="@mipmap/mine_header"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_agreement_privacy_and"
-            android:textColor="@color/login_agree_privacy_ext"
-            android:textSize="13sp" />
+            <TextView
+                android:id="@+id/mine_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:text="-"
+                android:textColor="@color/text_ff383838"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toTopOf="@id/mine_id"
+                app:layout_constraintLeft_toRightOf="@id/mine_icon"
+                app:layout_constraintRight_toLeftOf="@id/mine_vip"
+                app:layout_constraintTop_toTopOf="@id/mine_icon"
+                tools:text="昵称昵称" />
 
-        <TextView
-            android:id="@+id/login_privacy"
-            android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/mine_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/mine_icon"
+                app:layout_constraintLeft_toRightOf="@id/mine_icon"
+                app:layout_constraintTop_toBottomOf="@id/mine_nickname">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_ff383838"
+                    android:textSize="12sp"
+                    android:text="ID：" />
+
+                <TextView
+                    android:id="@+id/mine_id_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textColor="@color/text_ff383838"
+                    android:textSize="12sp"
+                    tools:text="123456790" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/mine_vip"
+                android:layout_width="29dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_mine_vip"
+                app:layout_constraintBottom_toBottomOf="@id/mine_nickname"
+                app:layout_constraintLeft_toRightOf="@id/mine_nickname"
+                app:layout_constraintTop_toTopOf="@id/mine_nickname" />
+
+            <LinearLayout
+                android:id="@+id/mine_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/mine_common_margin"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/mine_more_info"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="信用分："
+                    android:textColor="@color/text_ff292f46"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/mine_credit_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="0"
+                    android:textColor="@color/text_ff292f46"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="60" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/mine_more_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mine_more_info_bg"
+                android:elevation="@dimen/common_elevation"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mine_credit">
+
+                <TextView
+                    android:id="@+id/mine_more_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="个人信息"
+                    android:textColor="@color/text_ff292f46"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/mine_more_info_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="6dp"
+                    android:src="@mipmap/ic_mine_right" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- 会员信息 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login_privacy"
-            android:textColor="@color/login_agree_privacy"
-            android:textSize="13sp" />
+            android:layout_marginStart="@dimen/mine_common_margin"
+            android:layout_marginEnd="@dimen/mine_common_margin"
+            android:background="@drawable/mine_vip_bg"
+            android:elevation="@dimen/common_elevation"
+            android:padding="@dimen/mine_common_padding">
+
+            <ImageView
+                android:id="@+id/mine_vip_icon"
+                android:layout_width="17.5dp"
+                android:layout_height="15dp"
+                android:src="@mipmap/mine_vip"
+                app:layout_constraintBottom_toBottomOf="@id/mine_vip_text"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/mine_vip_text"
+                app:layout_constraintTop_toTopOf="@id/mine_vip_text" />
+
+            <TextView
+                android:id="@+id/mine_vip_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="尊敬的水木会员，您已成为会员 100 天"
+                android:textColor="@color/vip"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/mine_vip_action"
+                app:layout_constraintLeft_toRightOf="@id/mine_vip_icon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/mine_vip_date_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/mine_vip_action"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/mine_vip_action">
+
+                <TextView
+                    android:id="@+id/mine_vip_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2025-10-07"
+                    android:textColor="@color/vip"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/mine_vip_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:text="到期"
+                    android:textColor="@color/vip"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/mine_vip_right_size"
+                    android:layout_height="@dimen/mine_vip_right_size"
+                    android:src="@mipmap/mine_vip_right" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/mine_vip_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/mine_vip_action_bg"
+                android:gravity="center"
+                android:text="立即续费"
+                android:textColor="#FF292F46"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mine_vip_text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- 我发起的活动 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mine_common_margin"
+            android:layout_marginTop="@dimen/mine_common_margin"
+            android:layout_marginEnd="@dimen/mine_common_margin"
+            android:background="@drawable/common_item_bg"
+            android:elevation="@dimen/common_elevation"
+            android:padding="@dimen/mine_common_padding">
+
+            <ImageView
+                android:id="@+id/mine_item_pub_icon"
+                android:layout_width="@dimen/mine_item_icon_size"
+                android:layout_height="@dimen/mine_item_icon_size"
+                android:src="@mipmap/mine_item_pub"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/mine_item_pub_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="我发起的活动"
+                android:textColor="@color/mine_item_text"
+                android:textSize="@dimen/mine_item_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/mine_item_pub_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="@dimen/mine_item_back_icon_size"
+                android:layout_height="@dimen/mine_item_back_icon_size"
+                android:src="@mipmap/mine_item_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- 已参加的活动 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mine_common_margin"
+            android:layout_marginTop="@dimen/mine_common_margin"
+            android:layout_marginEnd="@dimen/mine_common_margin"
+            android:background="@drawable/common_item_bg"
+            android:elevation="@dimen/common_elevation"
+            android:orientation="vertical"
+            android:padding="@dimen/mine_common_padding">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/mine_item_done_icon"
+                    android:layout_width="@dimen/mine_item_icon_size"
+                    android:layout_height="@dimen/mine_item_icon_size"
+                    android:src="@mipmap/mine_item_done"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/mine_item_done_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:text="已参加的活动"
+                    android:textColor="@color/mine_item_text"
+                    android:textSize="@dimen/mine_item_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/mine_item_done_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/mine_item_done_text_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(0)"
+                    tools:text="(5)"
+                    android:textColor="@color/mine_item_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/mine_item_done_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="@dimen/mine_item_back_icon_size"
+                    android:layout_height="@dimen/mine_item_back_icon_size"
+                    android:src="@mipmap/mine_item_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/mine_done_vp"
+                android:layout_marginTop="@dimen/mine_common_margin"
+                android:layout_width="wrap_content"
+                android:layout_height="104dp"
+                android:orientation="horizontal" />
+        </LinearLayout>
+        <!-- 我的历史活动 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mine_common_margin"
+            android:layout_marginTop="@dimen/mine_common_margin"
+            android:layout_marginEnd="@dimen/mine_common_margin"
+            android:background="@drawable/common_item_bg"
+            android:elevation="@dimen/common_elevation"
+            android:padding="@dimen/mine_common_padding">
+
+            <ImageView
+                android:id="@+id/mine_item_history_icon"
+                android:layout_width="@dimen/mine_item_icon_size"
+                android:layout_height="@dimen/mine_item_icon_size"
+                android:src="@mipmap/mine_item_history"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/mine_item_history_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="我的历史活动"
+                android:textColor="@color/mine_item_text"
+                android:textSize="@dimen/mine_item_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/mine_item_history_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="@dimen/mine_item_back_icon_size"
+                android:layout_height="@dimen/mine_item_back_icon_size"
+                android:src="@mipmap/mine_item_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- 联系我们 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mine_common_margin"
+            android:layout_marginTop="@dimen/mine_common_margin"
+            android:layout_marginEnd="@dimen/mine_common_margin"
+            android:background="@drawable/common_item_bg"
+            android:elevation="@dimen/common_elevation"
+            android:padding="@dimen/mine_common_padding">
+
+            <ImageView
+                android:id="@+id/mine_item_contact_icon"
+                android:layout_width="@dimen/mine_item_icon_size"
+                android:layout_height="@dimen/mine_item_icon_size"
+                android:src="@mipmap/mine_item_contact"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/mine_item_contact_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="联系我们"
+                android:textColor="@color/mine_item_text"
+                android:textSize="@dimen/mine_item_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/mine_item_contact_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="@dimen/mine_item_back_icon_size"
+                android:layout_height="@dimen/mine_item_back_icon_size"
+                android:src="@mipmap/mine_item_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- 兑换码 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mine_common_margin"
+            android:layout_marginTop="@dimen/mine_common_margin"
+            android:layout_marginEnd="@dimen/mine_common_margin"
+            android:layout_marginBottom="@dimen/mine_common_margin"
+            android:background="@drawable/common_item_bg"
+            android:elevation="@dimen/common_elevation"
+            android:padding="@dimen/mine_common_padding">
+
+            <ImageView
+                android:id="@+id/mine_item_code_icon"
+                android:layout_width="@dimen/mine_item_icon_size"
+                android:layout_height="@dimen/mine_item_icon_size"
+                android:src="@mipmap/mine_item_code"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/mine_item_code_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="兑换码"
+                android:textColor="@color/mine_item_text"
+                android:textSize="@dimen/mine_item_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/mine_item_code_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="@dimen/mine_item_back_icon_size"
+                android:layout_height="@dimen/mine_item_back_icon_size"
+                android:src="@mipmap/mine_item_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
 

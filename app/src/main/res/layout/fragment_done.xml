@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- 图片 -->
+        <ImageView
+            android:id="@+id/activity_icon"
+            android:layout_width="57dp"
+            android:layout_height="80.5dp"
+            android:src="@mipmap/mine_done_book_sample"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            app:layout_constraintRight_toRightOf="@id/activity_icon"
+            app:layout_constraintBottom_toBottomOf="@id/activity_icon"
+            android:id="@+id/activity_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/0"
+            android:textColor="#ff808080"
+            android:textSize="9sp"
+            tools:text="5/7" />
+
+        <!-- 名称 -->
+        <LinearLayout
+            android:id="@+id/activity_top"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/activity_center"
+            app:layout_constraintLeft_toRightOf="@id/activity_icon"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread">
+
+            <TextView
+                android:id="@+id/activity_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activity_type_bg"
+                android:gravity="center"
+                android:paddingLeft="9dp"
+                android:paddingTop="3dp"
+                android:paddingRight="9dp"
+                android:paddingBottom="3dp"
+                android:text="线下"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/activity_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/activity_item_offset"
+                android:text=""
+                android:textColor="@color/mine_item_text"
+                android:textSize="14sp"
+                tools:text="名称名称" />
+
+        </LinearLayout>
+
+        <!-- 日期时间 -->
+        <LinearLayout
+            android:id="@+id/activity_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/activity_bottom"
+            app:layout_constraintLeft_toRightOf="@id/activity_icon"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_top"
+            app:layout_constraintVertical_chainStyle="spread">
+
+            <ImageView
+                android:layout_width="@dimen/activity_icon_size"
+                android:layout_height="@dimen/activity_icon_size"
+                android:src="@mipmap/activity_datetime" />
+
+            <TextView
+                android:id="@+id/activity_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_item_offset"
+                android:text=""
+                android:textColor="@color/mine_item_text"
+                android:textSize="11sp"
+                tools:text="07.10  10:20  周三" />
+
+        </LinearLayout>
+
+        <!-- 地址 -->
+        <LinearLayout
+            android:id="@+id/activity_bottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/activity_icon"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_center"
+            app:layout_constraintVertical_chainStyle="spread">
+
+            <ImageView
+                android:layout_width="@dimen/activity_icon_size"
+                android:layout_height="@dimen/activity_icon_size"
+                android:src="@mipmap/activity_location" />
+
+            <TextView
+                android:id="@+id/activity_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_item_offset"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/mine_item_text"
+                android:textSize="11sp"
+                tools:text="地点位置地点位置地点位置地点位置..." />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- 指示器 -->
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"
+         />
+
+
+</LinearLayout>
+

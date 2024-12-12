@@ -9,5 +9,14 @@
     <dimen name="login_agreement_privacy_margin_top">20dp</dimen>
     <dimen name="home_tab_size">27dp</dimen>
     <dimen name="home_tab_text">12sp</dimen>
-    <dimen name="common_elevation">10dp</dimen>
+    <dimen name="common_elevation">5dp</dimen>
+    <dimen name="mine_img_size">75dp</dimen>
+    <dimen name="mine_common_margin">15dp</dimen>
+    <dimen name="mine_vip_right_size">10dp</dimen>
+    <dimen name="mine_common_padding">14dp</dimen>
+    <dimen name="mine_item_icon_size">15dp</dimen>
+    <dimen name="mine_item_back_icon_size">12dp</dimen>
+    <dimen name="mine_item_text">15sp</dimen>
+    <dimen name="activity_icon_size">12dp</dimen>
+    <dimen name="activity_item_offset">4dp</dimen>
 </resources>

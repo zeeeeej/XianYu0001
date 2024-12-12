@@ -6,4 +6,21 @@
     </style>
 
     <style name="Theme.ShuiMuKeTing" parent="Base.Theme.ShuiMuKeTing" />
+
+    <style name="CustomBottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@color/white</item>
+        <item name="itemTextAppearanceActive">@style/CustomBottomNavigationTabTextActive</item>
+        <item name="itemTextAppearanceInactive">@style/CustomBottomNavigationTabTextInactive</item>
+    </style>
+
+    <style name="CustomBottomNavigationTabTextActive" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:textSize">@dimen/home_tab_size</item>
+        <item name="android:textColor">@color/home_tab_text_sel</item>
+    </style>
+
+    <style name="CustomBottomNavigationTabTextInactive" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:textSize">@dimen/home_tab_size</item>
+        <item name="android:textColor">@color/home_tab_text</item>
+    </style>
+
 </resources>

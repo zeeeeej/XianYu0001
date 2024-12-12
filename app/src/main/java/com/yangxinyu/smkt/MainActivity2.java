@@ -1,17 +1,12 @@
 package com.yangxinyu.smkt;
 
-import static com.yangxinyu.smkt.MainActivity2.LOGIN_FRAGMENT_TAG;
-
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.yangxinyu.smkt.base.BaseActivity;
 import com.yangxinyu.smkt.model.DefaultRepository;
@@ -22,86 +17,39 @@ import com.yangxinyu.smkt.ui.OfflinePageFragment;
 import com.yangxinyu.smkt.ui.OnlinePageFragment;
 import com.yangxinyu.smkt.ui.TodoPageFragment;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity2 extends BaseActivity {
+    public static final String LOGIN_FRAGMENT_TAG = "LoginFragmentTag";
+    /* 当前选中的Tab */
+    private Tab selectedTab = Tab.Offline;
 
     @Override
     public int layoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_main3;
     }
 
     @Override
     public void init() {
-        ViewPager2 vp = findViewById(R.id.home_vp);
+
         View todoTabView = findViewById(R.id.home_tab_todo);
         View offlineTabView = findViewById(R.id.home_tab_offline);
         View onlineTabView = findViewById(R.id.home_tab_online);
         View mineTabView = findViewById(R.id.home_tab_mine);
-        Tab[] values = Tab.values();
-        int size = values.length;
-        vp.setOffscreenPageLimit(size);
-        vp.setAdapter(new FragmentStateAdapter(this) {
-            @NonNull
-            @Override
-            public Fragment createFragment(int position) {
-                Fragment fragment = null;
-                switch (position) {
-                    case 0:
-                        fragment = OfflinePageFragment.newInstance();
-                        break;
-                    case 1:
-                        fragment = OnlinePageFragment.newInstance();
-                        break;
-                    case 2:
-                        fragment = TodoPageFragment.newInstance();
-                        break;
-                    case 3:
-                        fragment = MinePageFragment.newInstance();
-                        break;
-                    default:
-                        break;
-                }
-                if (fragment == null) throw new IllegalStateException("程序写错了");
-                return fragment;
-            }
-
-            @Override
-            public int getItemCount() {
-                return size;
-            }
-        });
-        vp.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                Tab tab = values[position];
-                refreshTitleAndBackground(tab);
-                refreshOfflineTab(tab == Tab.Offline);
-                refreshOnlineTab(tab == Tab.Online);
-                refreshTodoTab(tab == Tab.Todo);
-                refreshMineTab(tab == Tab.Mine);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-            }
-        });
+        refreshByTab(selectedTab);
         offlineTabView.setOnClickListener((v) -> {
-            vp.setCurrentItem(0);
+            selectedTab = Tab.Offline;
+            refreshByTab();
         });
         onlineTabView.setOnClickListener((v) -> {
-            vp.setCurrentItem(1);
+            selectedTab = Tab.Online;
+            refreshByTab();
         });
         todoTabView.setOnClickListener((v) -> {
-            vp.setCurrentItem(2);
+            selectedTab = Tab.Todo;
+            refreshByTab();
         });
         mineTabView.setOnClickListener((v) -> {
-            vp.setCurrentItem(3);
+            selectedTab = Tab.Mine;
+            refreshByTab();
         });
     }
 
@@ -112,82 +60,99 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    private void refreshTitleAndBackground(Tab tab) {
+    private void refreshByTab() {
+        refreshByTab(selectedTab);
+    }
+
+    private void refreshByTab(Tab tab) {
+        refreshOfflineTab(tab == Tab.Offline);
+        refreshOnlineTab(tab == Tab.Online);
+        refreshTodoTab(tab == Tab.Todo);
+        refreshMineTab(tab == Tab.Mine);
+
+        refreshTitle(tab);
+        showPageFragment(selectedTab);
+    }
+
+    private void refreshTitle(Tab tab) {
         TextView titleView = findViewById(R.id.home_title);
-        View mainView = findViewById(R.id.main);
         int title = 0;
-        int backgroundColor = 0;
         switch (tab) {
             case Offline:
                 title = R.string.home_tab_offline;
-                backgroundColor = R.drawable.home_tab_offline_bg;
                 break;
             case Online:
                 title = R.string.home_tab_online;
-                backgroundColor = R.drawable.home_tab_online_bg;
                 break;
             case Todo:
                 title = R.string.home_tab_todo;
-                backgroundColor = R.drawable.home_tab_todo_bg;
                 break;
             case Mine:
                 title = R.string.home_tab_mine;
-                backgroundColor = R.drawable.home_tab_mine_bg;
                 break;
         }
         if (title != 0) {
             titleView.setText(title);
-        }
-        if (backgroundColor != 0) {
-            mainView.setBackgroundResource(backgroundColor);
         }
     }
 
     private void refreshOfflineTab(boolean selected) {
         ImageView iconView = findViewById(R.id.home_tab_offline_icon);
         TextView textView = findViewById(R.id.home_tab_offline_text);
+        View page = findViewById(R.id.fragment_container_home_tab_page_offline);
         if (selected) {
             iconView.setImageResource(Tab.Offline.getSel());
             textView.setTextColor(getColor(R.color.home_tab_text_sel));
+            page.setVisibility(View.VISIBLE);
         } else {
             iconView.setImageResource(Tab.Offline.getNormal());
             textView.setTextColor(getColor(R.color.home_tab_text));
+            page.setVisibility(View.INVISIBLE);
         }
     }
 
     private void refreshOnlineTab(boolean selected) {
         ImageView iconView = findViewById(R.id.home_tab_online_icon);
         TextView textView = findViewById(R.id.home_tab_online_text);
+        View page = findViewById(R.id.fragment_container_home_tab_page_online);
         if (selected) {
             iconView.setImageResource(Tab.Online.getSel());
             textView.setTextColor(getColor(R.color.home_tab_text_sel));
+            page.setVisibility(View.VISIBLE);
         } else {
             iconView.setImageResource(Tab.Online.getNormal());
             textView.setTextColor(getColor(R.color.home_tab_text));
+            page.setVisibility(View.INVISIBLE);
         }
     }
 
     private void refreshTodoTab(boolean selected) {
         ImageView iconView = findViewById(R.id.home_tab_todo_icon);
         TextView textView = findViewById(R.id.home_tab_todo_text);
+        View page = findViewById(R.id.fragment_container_home_tab_page_todo);
         if (selected) {
             iconView.setImageResource(Tab.Todo.getSel());
             textView.setTextColor(getColor(R.color.home_tab_text_sel));
+            page.setVisibility(View.VISIBLE);
         } else {
             iconView.setImageResource(Tab.Todo.getNormal());
             textView.setTextColor(getColor(R.color.home_tab_text));
+            page.setVisibility(View.INVISIBLE);
         }
     }
 
     private void refreshMineTab(boolean selected) {
         ImageView iconView = findViewById(R.id.home_tab_mine_icon);
         TextView textView = findViewById(R.id.home_tab_mine_text);
+        View page = findViewById(R.id.fragment_container_home_tab_page_mine);
         if (selected) {
             iconView.setImageResource(Tab.Mine.getSel());
             textView.setTextColor(getColor(R.color.home_tab_text_sel));
+            page.setVisibility(View.VISIBLE);
         } else {
             iconView.setImageResource(Tab.Mine.getNormal());
             textView.setTextColor(getColor(R.color.home_tab_text));
+            page.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -198,6 +163,43 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private void showPageFragment(Tab tab) {
+        try {
+            String tag = tab.getTag();
+            FragmentManager supportFragmentManager = getSupportFragmentManager();
+            Fragment fragment = supportFragmentManager.findFragmentByTag(tag);
+            int containerViewId = 0;
+            if (fragment == null) {
+                switch (tab) {
+                    case Offline:
+                        fragment = OfflinePageFragment.newInstance();
+                        containerViewId = R.id.fragment_container_home_tab_page_offline;
+                        break;
+                    case Online:
+                        fragment = OnlinePageFragment.newInstance();
+                        containerViewId = R.id.fragment_container_home_tab_page_online;
+                        break;
+                    case Todo:
+                        fragment = TodoPageFragment.newInstance();
+                        containerViewId = R.id.fragment_container_home_tab_page_todo;
+                        break;
+                    case Mine:
+                        fragment = MinePageFragment.newInstance();
+                        containerViewId = R.id.fragment_container_home_tab_page_mine;
+                        break;
+                    default:
+                        break;
+                }
+                if (fragment == null || containerViewId == 0) return;
+                FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+                fragmentTransaction.add(containerViewId, fragment, tag);
+                fragmentTransaction.commitAllowingStateLoss();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void showFragment(Fragment fragment) {
         try {
