@@ -12,10 +12,10 @@ import com.yangxinyu.smkt.base.BaseActivity;
 import com.yangxinyu.smkt.model.DefaultRepository;
 import com.yangxinyu.smkt.model.vo.Tab;
 import com.yangxinyu.smkt.ui.LoginFragment;
-import com.yangxinyu.smkt.ui.MinePageFragment;
-import com.yangxinyu.smkt.ui.OfflinePageFragment;
-import com.yangxinyu.smkt.ui.OnlinePageFragment;
-import com.yangxinyu.smkt.ui.TodoPageFragment;
+import com.yangxinyu.smkt.ui.HomeMinePageFragment;
+import com.yangxinyu.smkt.ui.HomeOfflinePageFragment;
+import com.yangxinyu.smkt.ui.HomeOnlinePageFragment;
+import com.yangxinyu.smkt.ui.HomeTodoPageFragment;
 
 public class MainActivity2 extends BaseActivity {
     public static final String LOGIN_FRAGMENT_TAG = "LoginFragmentTag";
@@ -172,19 +172,19 @@ public class MainActivity2 extends BaseActivity {
             if (fragment == null) {
                 switch (tab) {
                     case Offline:
-                        fragment = OfflinePageFragment.newInstance();
+                        fragment = HomeOfflinePageFragment.newInstance();
                         containerViewId = R.id.fragment_container_home_tab_page_offline;
                         break;
                     case Online:
-                        fragment = OnlinePageFragment.newInstance();
+                        fragment = HomeOnlinePageFragment.newInstance();
                         containerViewId = R.id.fragment_container_home_tab_page_online;
                         break;
                     case Todo:
-                        fragment = TodoPageFragment.newInstance();
+                        fragment = HomeTodoPageFragment.newInstance();
                         containerViewId = R.id.fragment_container_home_tab_page_todo;
                         break;
                     case Mine:
-                        fragment = MinePageFragment.newInstance();
+                        fragment = HomeMinePageFragment.newInstance();
                         containerViewId = R.id.fragment_container_home_tab_page_mine;
                         break;
                     default:

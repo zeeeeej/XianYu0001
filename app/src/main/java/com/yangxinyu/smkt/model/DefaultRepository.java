@@ -8,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 /**
  * Model层
@@ -16,6 +19,7 @@ import java.util.Random;
 public class DefaultRepository {
     private final Datasource datasource = new DefaultDatasource();
     private final Random random = new Random();
+    private final ExecutorService pool = Executors.newCachedThreadPool();
 
     public static DefaultRepository getInstance() {
         return Holder.INSTANCE;
@@ -34,8 +38,16 @@ public class DefaultRepository {
         return user == null ? new ArrayList<>() : datasource.allDoneActivitiesByUserId(user.getId());
     }
 
+    public @NotNull void getTodoActivities(MyActivity.ActivityType type, List<MyActivity.ActivityClass> activityClasses, Consumer<List<MyActivity>> consumer) {
+        pool.execute(() -> {
+            List<MyActivity> list = datasource.allTodoActivities(type, activityClasses);
+            consumer.accept(list);
+        });
+    }
+
+
     public void checkLogin(LoginCallback callback) {
-        new Thread(() -> {
+        pool.execute(() -> {
             try {
                 Thread.sleep(1000);
                 if (random.nextBoolean()) {
@@ -47,8 +59,7 @@ public class DefaultRepository {
                 e.printStackTrace();
                 callback.onFail("登录失败:" + e.getMessage());
             }
-
-        }).start();
+        });
     }
 
 

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_item_bg_8"
+        android:elevation="@dimen/common_elevation"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="@dimen/common_elevation"
+        android:orientation="vertical"
+        android:padding="15dp"
+        tools:context=".LoginActivity">
+
+
+        <!-- 日期时间 -->
+        <LinearLayout
+            android:id="@+id/activity_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/activity_bottom"
+            app:layout_constraintLeft_toRightOf="@id/activity_icon"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_name"
+            app:layout_constraintVertical_chainStyle="spread">
+
+            <TextView
+                android:id="@+id/activity_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_item_offset"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="#FF292F46"
+                android:textSize="13sp"
+                tools:text="07.10  10:20  周三" />
+
+            <TextView
+                android:id="@+id/activity_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_item_offset"
+                android:background="@drawable/activity_status_sign_bg"
+                android:paddingLeft="12dp"
+                android:paddingTop="2dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="2dp"
+                android:text="签到"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@color/line" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!-- 图片 -->
+            <ImageView
+                android:id="@+id/activity_icon"
+                android:layout_width="74dp"
+                android:layout_height="109dp"
+                android:src="@mipmap/todo_activity_item_icon_sample"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 名称 -->
+            <TextView
+                android:id="@+id/activity_name"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text=""
+                android:textColor="@color/text_ff333333"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/activity_bottom"
+                app:layout_constraintLeft_toRightOf="@id/activity_icon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread"
+                tools:text="名称名称名称名称名称名称" />
+
+
+            <!-- 地址 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_bottom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/activity_icon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_name"
+                app:layout_constraintVertical_chainStyle="spread">
+
+                <ImageView
+                    android:id="@+id/activity_location_icon"
+                    android:layout_width="@dimen/activity_icon_size"
+                    android:layout_height="@dimen/activity_icon_size"
+                    android:src="@mipmap/activity_location"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/activity_address_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_item_offset"
+                    android:ellipsize="end"
+                    android:text="活动地点"
+                    android:textColor="#ff707070"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@id/activity_location_icon"
+                    app:layout_constraintLeft_toRightOf="@id/activity_location_icon"
+                    app:layout_constraintTop_toTopOf="@id/activity_location_icon" />
+
+                <TextView
+                    android:id="@+id/activity_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text=""
+                    android:textColor="#ff707070"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="@id/activity_address_title"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/activity_address_title"
+                    tools:text="地点位置地点位置地点位置地点位置地点位置地点位置地点位置地" />
+
+                    <LinearLayout
+                        android:id="@+id/activity_action_nav"
+                        app:layout_constraintRight_toRightOf="@id/activity_address"
+                        app:layout_constraintBottom_toBottomOf="@id/activity_address"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="导航"
+                            android:textColor="#FF1365C2"
+                            android:textSize="13sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <ImageView
+                            android:src="@mipmap/todo_nav"
+                            android:layout_width="wrap_content"
+                            android:layout_height="10dp"/>
+
+                    </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@color/line" />
+
+        <!-- 签到 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发起人："
+                android:textColor="#FF525252"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/activity_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="昵称昵称昵称"
+                android:textColor="#FF525252"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/activity_action_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activity_action_sign_bg"
+                android:paddingLeft="49dp"
+                android:paddingTop="7dp"
+                android:paddingRight="49dp"
+                android:paddingBottom="7dp"
+                android:text="签到"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+

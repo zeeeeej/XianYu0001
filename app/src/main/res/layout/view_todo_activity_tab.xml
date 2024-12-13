@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/text"
+        android:textSize="13sp"
+        android:paddingBottom="9.5dp"
+        android:paddingTop="9.5dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        tools:text="全部"
+        android:background="@drawable/todo_activity_tab_bg_normal"
+        android:textColor="@color/todo_activity_tab_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</FrameLayout>
+

@@ -2,6 +2,7 @@ package com.yangxinyu.smkt;
 
 import static com.yangxinyu.smkt.MainActivity2.LOGIN_FRAGMENT_TAG;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,10 +18,10 @@ import com.yangxinyu.smkt.base.BaseActivity;
 import com.yangxinyu.smkt.model.DefaultRepository;
 import com.yangxinyu.smkt.model.vo.Tab;
 import com.yangxinyu.smkt.ui.LoginFragment;
-import com.yangxinyu.smkt.ui.MinePageFragment;
-import com.yangxinyu.smkt.ui.OfflinePageFragment;
-import com.yangxinyu.smkt.ui.OnlinePageFragment;
-import com.yangxinyu.smkt.ui.TodoPageFragment;
+import com.yangxinyu.smkt.ui.HomeMinePageFragment;
+import com.yangxinyu.smkt.ui.HomeOfflinePageFragment;
+import com.yangxinyu.smkt.ui.HomeOnlinePageFragment;
+import com.yangxinyu.smkt.ui.HomeTodoPageFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void init() {
         ViewPager2 vp = findViewById(R.id.home_vp);
+        vp.setUserInputEnabled(false);
         View todoTabView = findViewById(R.id.home_tab_todo);
         View offlineTabView = findViewById(R.id.home_tab_offline);
         View onlineTabView = findViewById(R.id.home_tab_online);
@@ -46,16 +48,16 @@ public class MainActivity extends BaseActivity {
                 Fragment fragment = null;
                 switch (position) {
                     case 0:
-                        fragment = OfflinePageFragment.newInstance();
+                        fragment = HomeOfflinePageFragment.newInstance();
                         break;
                     case 1:
-                        fragment = OnlinePageFragment.newInstance();
+                        fragment = HomeOnlinePageFragment.newInstance();
                         break;
                     case 2:
-                        fragment = TodoPageFragment.newInstance();
+                        fragment = HomeTodoPageFragment.newInstance();
                         break;
                     case 3:
-                        fragment = MinePageFragment.newInstance();
+                        fragment = HomeMinePageFragment.newInstance();
                         break;
                     default:
                         break;
@@ -139,7 +141,12 @@ public class MainActivity extends BaseActivity {
             titleView.setText(title);
         }
         if (backgroundColor != 0) {
-            mainView.setBackgroundResource(backgroundColor);
+            if (DefaultRepository.getInstance().checkLogin()){
+                mainView.setBackgroundColor(Color.WHITE);
+            }else{
+
+                mainView.setBackgroundResource(backgroundColor);
+            }
         }
     }
 

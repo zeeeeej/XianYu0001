@@ -11,8 +11,29 @@ public class MyActivity implements Parcelable {
     private String address;
     private String icon;
     private ActivityType type;
+    private ActivityClass clz;
+    private ActivityStatus status;
+    private ActivitySigned signed;
+    private User publisher;
+
 
     public MyActivity() {
+    }
+
+    public ActivityStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ActivityStatus status) {
+        this.status = status;
+    }
+
+    public User getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(User publisher) {
+        this.publisher = publisher;
     }
 
     protected MyActivity(Parcel in) {
@@ -74,6 +95,14 @@ public class MyActivity implements Parcelable {
         this.type = type;
     }
 
+    public ActivityClass getClz() {
+        return clz;
+    }
+
+    public void setClz(ActivityClass clz) {
+        this.clz = clz;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -87,9 +116,38 @@ public class MyActivity implements Parcelable {
         dest.writeString(icon);
     }
 
-    public enum ActivityType {
-        Online, Offline;
+    public ActivitySigned getSigned() {
+        return signed;
     }
+
+    public void setSigned(ActivitySigned signed) {
+        this.signed = signed;
+    }
+
+    public enum ActivityType {
+        Offline, Online;
+    }
+
+    public enum ActivityClass {
+        Book,
+        Film,
+        Tea,
+        Magic,
+        ;
+    }
+
+    public enum ActivityStatus {
+        Done,
+        Todo,
+        Doing;
+    }
+
+    public enum ActivitySigned {
+        Done,
+        Todo
+        ;
+    }
+
 }
 
 

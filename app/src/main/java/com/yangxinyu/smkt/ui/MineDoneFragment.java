@@ -12,10 +12,11 @@ import com.yangxinyu.smkt.base.BaseFragment;
 import com.yangxinyu.smkt.model.entity.MyActivity;
 import com.yangxinyu.smkt.util.StringUtil;
 
-public class DoneFragment extends BaseFragment {
+public class MineDoneFragment extends BaseFragment {
     public static final String KEY_MY_ACTIVITY = "MyActivity";
+    public static final String KEY_MAX = "Max";
     public static final String KEY_PROGRESS = "Progress";
-    private static final String PATTERN_ACTIVITY = "MM.dd  HH:mm  EEEE";
+    public static final String PATTERN_ACTIVITY = "MM.dd  HH:mm  EEEE";
     private static final String PROGRESS_AND = "/";
 
     @Override
@@ -23,11 +24,12 @@ public class DoneFragment extends BaseFragment {
         return R.layout.fragment_done;
     }
 
-    public static DoneFragment newInstance(MyActivity myActivity, int progress, int max) {
-        DoneFragment fragment = new DoneFragment();
+    public static MineDoneFragment newInstance(MyActivity myActivity, int progress, int max) {
+        MineDoneFragment fragment = new MineDoneFragment();
         Bundle args = new Bundle();
         args.putParcelable(KEY_MY_ACTIVITY, myActivity);
-        args.putString(KEY_PROGRESS, (progress+1) + PROGRESS_AND + max);
+        args.putInt(KEY_PROGRESS, progress);
+        args.putInt(KEY_MAX, max);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,17 +46,18 @@ public class DoneFragment extends BaseFragment {
         Bundle arguments = getArguments();
         if (arguments != null) {
             MyActivity myActivity = arguments.getParcelable(KEY_MY_ACTIVITY);
-            String progress = arguments.getString(KEY_PROGRESS,"0/0");
+            int progress = arguments.getInt(KEY_PROGRESS, 0);
+            int max = arguments.getInt(KEY_MAX, 0);
             refreshActivity(myActivity);
-            refreshProgress(progress);
+            refreshProgress(progress, max);
         }
     }
 
-    private void refreshProgress(String progress) {
+    private void refreshProgress(int progress, int max) {
         View view = getView();
         if (view == null) return;
         TextView progressView = view.findViewById(R.id.activity_progress);
-        progressView.setText(progress);
+        progressView.setText((progress + 1) + PROGRESS_AND + max);
     }
 
     private void refreshActivity(MyActivity myActivity) {

@@ -15,13 +15,12 @@ import com.yangxinyu.smkt.base.BaseFragment;
 import com.yangxinyu.smkt.model.DefaultRepository;
 import com.yangxinyu.smkt.model.entity.MyActivity;
 import com.yangxinyu.smkt.model.entity.User;
+import com.yangxinyu.smkt.ui.widget.IndicateView;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class MinePageFragment extends BaseFragment {
+public class HomeMinePageFragment extends BaseFragment {
     private int currentDoneActivityPosition = 0;
 
     @Override
@@ -29,8 +28,8 @@ public class MinePageFragment extends BaseFragment {
         return R.layout.fragment_mine;
     }
 
-    public static MinePageFragment newInstance() {
-        MinePageFragment fragment = new MinePageFragment();
+    public static HomeMinePageFragment newInstance() {
+        HomeMinePageFragment fragment = new HomeMinePageFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -43,6 +42,7 @@ public class MinePageFragment extends BaseFragment {
         refreshUserinfo(user);
         List<MyActivity> doneActivities = DefaultRepository.getInstance().getDoneActivities();
         refreshDoneViewPager(doneActivities);
+
     }
 
     private void refreshUserinfo(User user) {
@@ -58,13 +58,38 @@ public class MinePageFragment extends BaseFragment {
         View view = getView();
         if (view == null) return;
         ViewPager2 vp = view.findViewById(R.id.mine_done_vp);
+        IndicateView indicateView = view.findViewById(R.id.mine_activity_indicate);
+        vp.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                handler.removeCallbacksAndMessages(null);
+                currentDoneActivityPosition = position;
+                indicateView.setProgress(currentDoneActivityPosition % list.size());
+                auto(vp, indicateView, list.size());
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+        });
         TextView countView = view.findViewById(R.id.mine_item_done_text_count);
         countView.setText(MessageFormat.format("({0})", list.size()));
         vp.setAdapter(new DoneAdapter(requireActivity(), list));
-        auto(vp, list.size());
+        indicateView.setMax(list.size());
+        auto(vp, indicateView, list.size());
+
+
     }
 
-    private void auto(ViewPager2 vp, int count) {
+    private void auto(ViewPager2 vp, IndicateView indicateView, int count) {
         if (count == 0) {
             handler.removeCallbacksAndMessages(null);
             return;
@@ -72,7 +97,9 @@ public class MinePageFragment extends BaseFragment {
         handler.postDelayed(() -> {
             currentDoneActivityPosition++;
             vp.setCurrentItem(currentDoneActivityPosition % count);
-            auto(vp, count);
+            indicateView.setProgress(currentDoneActivityPosition % count);
+            auto(vp, indicateView, count);
+
         }, 3000);
     }
 
@@ -87,7 +114,7 @@ public class MinePageFragment extends BaseFragment {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            return DoneFragment.newInstance(list.get(position), position, list.size());
+            return MineDoneFragment.newInstance(list.get(position), position, list.size());
         }
 
         @Override

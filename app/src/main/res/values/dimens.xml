@@ -19,4 +19,8 @@
     <dimen name="mine_item_text">15sp</dimen>
     <dimen name="activity_icon_size">12dp</dimen>
     <dimen name="activity_item_offset">4dp</dimen>
+    <dimen name="indicate_default_line_width">6dp</dimen>
+    <dimen name="indicate_default_line_height">4dp</dimen>
+    <dimen name="todo_recycler_offset">7.5dp</dimen>
+    <dimen name="line">1dp</dimen>
 </resources>

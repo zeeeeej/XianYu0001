@@ -5,33 +5,31 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/todo_tab"
+        android:id="@+id/todo_activity_tab"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:background="@android:color/transparent"
+
         app:tabBackground="@android:color/transparent"
         app:tabGravity="fill"
-        app:tabIndicator="@drawable/todo_indicate_bg"
-        app:tabIndicatorColor="#FFC4C9F2"
+        app:tabIndicator="@null"
         app:tabIndicatorFullWidth="false"
-        app:tabInlineLabel="false"
-        app:tabMode="fixed"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="scrollable"
+        app:tabPaddingBottom="0dp"
+        app:tabPaddingEnd="8dp"
+        app:tabPaddingStart="8dp"
+        app:tabPaddingTop="0dp"
         app:tabRippleColor="@android:color/transparent" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/todo_vp"
+        android:id="@+id/todo_activity_vp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#fff5f5f5" />
-
+        android:layout_weight="1" />
 </LinearLayout>
-
-
-
 

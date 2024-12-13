@@ -242,7 +242,7 @@
             android:layout_marginStart="@dimen/mine_common_margin"
             android:layout_marginTop="@dimen/mine_common_margin"
             android:layout_marginEnd="@dimen/mine_common_margin"
-            android:background="@drawable/common_item_bg"
+            android:background="@drawable/common_item_bg_10"
             android:elevation="@dimen/common_elevation"
             android:padding="@dimen/mine_common_padding">
 
@@ -283,7 +283,7 @@
             android:layout_marginStart="@dimen/mine_common_margin"
             android:layout_marginTop="@dimen/mine_common_margin"
             android:layout_marginEnd="@dimen/mine_common_margin"
-            android:background="@drawable/common_item_bg"
+            android:background="@drawable/common_item_bg_10"
             android:elevation="@dimen/common_elevation"
             android:orientation="vertical"
             android:padding="@dimen/mine_common_padding">
@@ -337,9 +337,17 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/mine_done_vp"
                 android:layout_marginTop="@dimen/mine_common_margin"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="104dp"
                 android:orientation="horizontal" />
+
+            <!-- 指示器 -->
+            <com.yangxinyu.smkt.ui.widget.IndicateView
+                android:id="@+id/mine_activity_indicate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                />
         </LinearLayout>
         <!-- 我的历史活动 -->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -348,7 +356,7 @@
             android:layout_marginStart="@dimen/mine_common_margin"
             android:layout_marginTop="@dimen/mine_common_margin"
             android:layout_marginEnd="@dimen/mine_common_margin"
-            android:background="@drawable/common_item_bg"
+            android:background="@drawable/common_item_bg_10"
             android:elevation="@dimen/common_elevation"
             android:padding="@dimen/mine_common_padding">
 
@@ -389,7 +397,7 @@
             android:layout_marginStart="@dimen/mine_common_margin"
             android:layout_marginTop="@dimen/mine_common_margin"
             android:layout_marginEnd="@dimen/mine_common_margin"
-            android:background="@drawable/common_item_bg"
+            android:background="@drawable/common_item_bg_10"
             android:elevation="@dimen/common_elevation"
             android:padding="@dimen/mine_common_padding">
 
@@ -431,7 +439,7 @@
             android:layout_marginTop="@dimen/mine_common_margin"
             android:layout_marginEnd="@dimen/mine_common_margin"
             android:layout_marginBottom="@dimen/mine_common_margin"
-            android:background="@drawable/common_item_bg"
+            android:background="@drawable/common_item_bg_10"
             android:elevation="@dimen/common_elevation"
             android:padding="@dimen/mine_common_padding">
 
