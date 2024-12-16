@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".LoginActivity">
+
+    <com.google.android.material.tabs.TabLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/done_vp"
+        android:id="@+id/done_tab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        app:tabBackground="@android:color/transparent"
+        app:tabIndicatorColor="@android:color/transparent"
+        app:tabIndicatorHeight="0dp"
+        app:tabInlineLabel="false"
+        app:tabMode="scrollable"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabIndicatorAnimationDuration="0"
+        app:tabIndicatorAnimationMode="linear"
+
+        />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/done_vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/done_tab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_weight="1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

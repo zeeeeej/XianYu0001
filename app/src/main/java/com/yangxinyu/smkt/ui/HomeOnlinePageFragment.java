@@ -2,13 +2,17 @@ package com.yangxinyu.smkt.ui;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+
 import com.yangxinyu.smkt.R;
 import com.yangxinyu.smkt.base.BaseFragment;
+import com.yangxinyu.smkt.model.entity.MyActivity;
 
-public class HomeOnlinePageFragment extends BaseFragment {
+public class HomeOnlinePageFragment extends AbstractHomeDonePageFragment {
+
     @Override
-    public int layoutId() {
-        return R.layout.fragment_online;
+    MyActivity.ActivityType activityType() {
+        return MyActivity.ActivityType.Online;
     }
 
     public static HomeOnlinePageFragment newInstance() {

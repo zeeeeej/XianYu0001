@@ -148,6 +148,15 @@ public class MyActivity implements Parcelable {
         ;
     }
 
+    public static ActivityType toActivityType(int value){
+        if (ActivityType.Offline.ordinal() == value) {
+            return ActivityType.Offline;
+        }else  if (ActivityType.Online.ordinal() == value) {
+            return ActivityType.Online;
+        } else{
+            throw new IllegalStateException("错误的value:"+value);
+        }
+    }
 }
 
 

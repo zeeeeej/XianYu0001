@@ -116,6 +116,7 @@ public class MainActivity extends BaseActivity {
 
     private void refreshTitleAndBackground(Tab tab) {
         TextView titleView = findViewById(R.id.home_title);
+        View iconView = findViewById(R.id.home_title_icon);
         View mainView = findViewById(R.id.main);
         int title = 0;
         int backgroundColor = 0;
@@ -123,18 +124,26 @@ public class MainActivity extends BaseActivity {
             case Offline:
                 title = R.string.home_tab_offline;
                 backgroundColor = R.drawable.home_tab_offline_bg;
+                iconView.setVisibility(View.VISIBLE);
+                titleView.setVisibility(View.INVISIBLE);
                 break;
             case Online:
                 title = R.string.home_tab_online;
                 backgroundColor = R.drawable.home_tab_online_bg;
+                iconView.setVisibility(View.VISIBLE);
+                titleView.setVisibility(View.INVISIBLE);
                 break;
             case Todo:
                 title = R.string.home_tab_todo;
                 backgroundColor = R.drawable.home_tab_todo_bg;
+                iconView.setVisibility(View.INVISIBLE);
+                titleView.setVisibility(View.VISIBLE);
                 break;
             case Mine:
                 title = R.string.home_tab_mine;
                 backgroundColor = R.drawable.home_tab_mine_bg;
+                iconView.setVisibility(View.INVISIBLE);
+                titleView.setVisibility(View.VISIBLE);
                 break;
         }
         if (title != 0) {
