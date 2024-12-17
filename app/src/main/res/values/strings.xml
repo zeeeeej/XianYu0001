@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ShuiMuKeTing</string>
+    <string name="app_name">水木客厅</string>
     <string name="login_btn">微信一键登录</string>
     <string name="login_agreement_privacy_prefix">我已阅读并同意</string>
     <string name="login_agreement">《用户协议》</string>

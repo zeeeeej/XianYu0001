@@ -1,6 +1,5 @@
 package com.yangxinyu.smkt;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +29,8 @@ public class MainActivity extends BaseActivity {
 
     private MainViewModel viewModel;
 
+    private final Tab[] values = Tab.values();
+
     @Override
     public int layoutId() {
         return R.layout.activity_main;
@@ -39,10 +40,23 @@ public class MainActivity extends BaseActivity {
     public void init() {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.user.observe(this, this::refreshUi);
-        User value = viewModel.user.getValue();
-        if (value==null){
-            showLogin();
-        }
+        viewModel.checkLoginEffect.observe(this,(effect)->{
+            switch (effect) {
+
+                case Idle:
+                    break;
+                case Start:
+                    break;
+                case Success:
+                    break;
+                case Fail:
+                    showLogin();
+                    break;
+            }
+        });
+
+        viewModel.checkLogin();
+
 
         ViewPager2 vp = findViewById(R.id.home_vp);
         viewModel.loginEffect.observe(this, (effect) -> {
@@ -83,7 +97,7 @@ public class MainActivity extends BaseActivity {
         View offlineTabView = findViewById(R.id.home_tab_offline);
         View onlineTabView = findViewById(R.id.home_tab_online);
         View mineTabView = findViewById(R.id.home_tab_mine);
-        Tab[] values = Tab.values();
+
         int size = values.length;
         vp.setOffscreenPageLimit(size);
         vp.setAdapter(new FragmentStateAdapter(getSupportFragmentManager(), this.getLifecycle()) {
@@ -188,11 +202,7 @@ public class MainActivity extends BaseActivity {
             titleView.setText(title);
         }
         if (backgroundColor != 0) {
-            if (getSupportFragmentManager().findFragmentByTag(LOGIN_FRAGMENT_TAG) != null) {
-                mainView.setBackgroundColor(Color.WHITE);
-            } else {
-                mainView.setBackgroundResource(backgroundColor);
-            }
+            mainView.setBackgroundResource(backgroundColor);
         }
     }
 
@@ -246,31 +256,23 @@ public class MainActivity extends BaseActivity {
 
     private void refreshUi(User user) {
         if (user == null) {
-            View mainView = findViewById(R.id.main);
-            mainView.setBackgroundColor(Color.WHITE);
+
         } else {
-            dismissFragment();
+            ViewPager2 vp = findViewById(R.id.home_vp);
+            refreshTitleAndBackground(values[vp.getCurrentItem()]);
+            dismissLogin();
         }
     }
 
-    public void showLogin() {
-        showFragment(LoginFragment.newInstance());
-    }
 
     public static final String LOGIN_FRAGMENT_TAG = "LOGIN_FRAGMENT_TAG";
 
-    private void showFragment(Fragment fragment) {
-
+    public void showLogin() {
         try {
-//            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-//            fragmentTransaction.replace(R.id.fragment_container_login, fragment, LOGIN_FRAGMENT_TAG);
-//            fragmentTransaction.commitAllowingStateLoss();
             FragmentManager supportFragmentManager = getSupportFragmentManager();
             Fragment loginFragment = supportFragmentManager.findFragmentByTag(LOGIN_FRAGMENT_TAG);
-
             if (loginFragment != null) {
                 ((DialogFragment) loginFragment).dismiss();
-
             }
             LoginFragment newFragment = new LoginFragment();
             newFragment.show(getSupportFragmentManager(), LOGIN_FRAGMENT_TAG);
@@ -279,16 +281,8 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void dismissFragment() {
+    private void dismissLogin() {
         try {
-//            FragmentManager supportFragmentManager = getSupportFragmentManager();
-//
-//            Fragment fragment = supportFragmentManager.findFragmentByTag(LOGIN_FRAGMENT_TAG);
-//            if (fragment != null) {
-//                FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-//                fragmentTransaction.remove(fragment);
-//                fragmentTransaction.commitAllowingStateLoss();
-//            }
             FragmentManager supportFragmentManager = getSupportFragmentManager();
             Fragment loginFragment = supportFragmentManager.findFragmentByTag(LOGIN_FRAGMENT_TAG);
             if (loginFragment != null) {
@@ -298,7 +292,6 @@ public class MainActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
-
 
     public static void doSomethingBeforeCheckUserLogin(Fragment fragment, Callback callback) {
         FragmentActivity fragmentActivity = fragment.requireActivity();

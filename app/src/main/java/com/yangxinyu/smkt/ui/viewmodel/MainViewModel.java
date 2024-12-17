@@ -21,11 +21,30 @@ public class MainViewModel extends ViewModel {
 
     private final MutableLiveData<Effect> _loginEffect = new MutableLiveData<>(Effect.Idle);
     private final MutableLiveData<Effect> _loginOutEffect = new MutableLiveData<>(Effect.Idle);
+    private final MutableLiveData<Effect> _checkLoginEffect = new MutableLiveData<>(Effect.Idle);
     private final MutableLiveData<Boolean> _firstEnter = new MutableLiveData<>(false);
 
     public LiveData<Effect> loginEffect = _loginEffect;
     public LiveData<Effect> loginOutEffect = _loginOutEffect;
+    public LiveData<Effect> checkLoginEffect = _checkLoginEffect;
     public LiveData<Boolean> firstEnter = _firstEnter;
+
+    public void checkLogin() {
+        _checkLoginEffect.postValue(Effect.Start);
+        DefaultRepository.getInstance().checkLogin(new DefaultRepository.CheckLoginCallback() {
+            @Override
+            public void onSuccess(User user) {
+                _user.postValue(user);
+                _checkLoginEffect.postValue(Effect.Success);
+                _firstEnter.postValue(true);
+            }
+
+            @Override
+            public void onFail(String msg) {
+                _checkLoginEffect.postValue(Effect.Fail);
+            }
+        });
+    }
 
     public void login(String username) {
 

@@ -12,11 +12,11 @@ public class ToastUtil {
             if (content == null || content.isEmpty()) {
                 return;
             }
-            if (toast == null) {
-                toast = Toast.makeText(MyApp.application, content, Toast.LENGTH_SHORT);
-            } else {
-                toast.setText(content);
+            if (toast != null) {
+                toast.cancel();
             }
+            toast = Toast.makeText(MyApp.application, content, Toast.LENGTH_SHORT);
+            toast.setText(content);
             toast.show();
         } catch (Exception e) {
             e.printStackTrace();

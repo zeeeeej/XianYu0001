@@ -30,6 +30,15 @@ public class DefaultRepository {
         return Holder.INSTANCE;
     }
 
+    {
+        pool.execute(() -> {
+            synchronized (this) {
+                String username = SP.getInstance().getUsername();
+                user = datasource.findUser(username);
+            }
+        });
+    }
+
     public User getUser() {
         return user;
     }
@@ -98,6 +107,24 @@ public class DefaultRepository {
         });
     }
 
+    public void checkLogin(CheckLoginCallback callback) {
+        pool.execute(() -> {
+            synchronized (this) {
+                if (user == null) {
+                    String username = SP.getInstance().getUsername();
+                    user = datasource.findUser(username);
+                    if (user != null) {
+                        callback.onSuccess(user);
+                    } else {
+                        callback.onFail("未登录");
+                    }
+                } else {
+                    callback.onSuccess(user);
+                }
+            }
+        });
+    }
+
     public void login(String username, LoginCallback callback) {
         pool.execute(() -> {
             synchronized (this) {
@@ -118,6 +145,7 @@ public class DefaultRepository {
                                 }
                             }
                         }
+                        SP.getInstance().setUsername(u.getUsername());
                         callback.onSuccess(u);
                     } else {
                         callback.onFail("登录失败");
@@ -135,6 +163,7 @@ public class DefaultRepository {
             synchronized (this) {
                 try {
                     mockCastTime();
+                    SP.getInstance().clear();
                     this.user = null;
                     allMyActivities.clear();
                     callback.accept(true);
@@ -156,6 +185,12 @@ public class DefaultRepository {
     }
 
     public interface LoginCallback {
+        void onSuccess(User user);
+
+        void onFail(String msg);
+    }
+
+    public interface CheckLoginCallback {
         void onSuccess(User user);
 
         void onFail(String msg);
