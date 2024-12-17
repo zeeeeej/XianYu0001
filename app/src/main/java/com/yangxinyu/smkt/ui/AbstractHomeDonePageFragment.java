@@ -1,20 +1,20 @@
 package com.yangxinyu.smkt.ui;
 
-import static com.yangxinyu.smkt.MainActivity2.LOGIN_FRAGMENT_TAG;
-
-import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.yangxinyu.smkt.MainActivity;
 import com.yangxinyu.smkt.R;
-import com.yangxinyu.smkt.base.BaseFragment;
-import com.yangxinyu.smkt.model.entity.MyActivity;
-import com.yangxinyu.smkt.util.XLog;
+import com.yangxinyu.smkt.ui.base.BaseFragment;
+import com.yangxinyu.smkt.repository.entity.ReaderActivity;
+import com.yangxinyu.smkt.util.ToastUtil;
 
+/**
+ * 已完成活动（线下/线上）
+ */
 public abstract class AbstractHomeDonePageFragment extends BaseFragment {
 
     @Override
@@ -22,12 +22,12 @@ public abstract class AbstractHomeDonePageFragment extends BaseFragment {
         return R.layout.fragment_home_done;
     }
 
-    abstract MyActivity.ActivityType activityType();
+    abstract ReaderActivity.ActivityType activityType();
 
     @Override
     protected void init(View view) {
         super.init(view);
-        MyActivity.ActivityType activityType = activityType();
+        ReaderActivity.ActivityType activityType = activityType();
         View locationView = view.findViewById(R.id.done_location);
         switch (activityType) {
             case Offline:
@@ -37,28 +37,46 @@ public abstract class AbstractHomeDonePageFragment extends BaseFragment {
                 locationView.setVisibility(View.GONE);
                 break;
         }
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        MyActivity.ActivityType activityType = activityType();
         Fragment fragment;
         switch (activityType) {
             case Offline:
-                fragment = DoneActivityFragment.newInstance(MyActivity.ActivityType.Offline);
+                fragment = DoneActivityFragment.newInstance(ReaderActivity.ActivityType.Offline);
                 initDoneActivity(activityType.name(), fragment);
                 break;
             case Online:
-                fragment = DoneActivityFragment.newInstance(MyActivity.ActivityType.Online);
+                fragment = DoneActivityFragment.newInstance(ReaderActivity.ActivityType.Online);
                 initDoneActivity(activityType.name(), fragment);
                 break;
         }
+
+        view.findViewById(R.id.done_location).setOnClickListener((v)->{
+            MainActivity.doSomethingBeforeCheckUserLogin(this,()->{
+                ToastUtil.show("TODO 定位位置");
+            });
+
+        });
+        view.findViewById(R.id.action_publish).setOnClickListener((v)->{
+            MainActivity.doSomethingBeforeCheckUserLogin(this,()->{
+                ToastUtil.show("TODO 发起活动");
+            });
+
+        });
+        view.findViewById(R.id.action_member).setOnClickListener((v)->{
+            MainActivity.doSomethingBeforeCheckUserLogin(this,()->{
+                ToastUtil.show("TODO 成为会员");
+            });
+
+        });
+        view.findViewById(R.id.action_history).setOnClickListener((v)->{
+            MainActivity.doSomethingBeforeCheckUserLogin(this,()->{
+                ToastUtil.show("TODO 历史活动");
+            });
+        });
+
     }
 
     private void initDoneActivity(String tag, Fragment fragment) {
         try {
-            XLog.i("initDoneActivity tag=" + tag + ",fragment=" + fragment);
             FragmentManager parentFragmentManager = getChildFragmentManager();
             FragmentTransaction fragmentTransaction = parentFragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.home_done_fragment_container, fragment, tag);

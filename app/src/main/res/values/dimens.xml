@@ -9,7 +9,8 @@
     <dimen name="login_agreement_privacy_margin_top">20dp</dimen>
     <dimen name="home_tab_size">27dp</dimen>
     <dimen name="home_tab_text">12sp</dimen>
-    <dimen name="common_elevation">5dp</dimen>
+    <dimen name="common_elevation">3dp</dimen>
+    <dimen name="common_elevation_offset">6dp</dimen>
     <dimen name="common_elevation_2">2dp</dimen>
     <dimen name="mine_img_size">75dp</dimen>
     <dimen name="mine_common_margin">15dp</dimen>

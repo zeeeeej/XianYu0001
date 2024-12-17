@@ -1,38 +1,55 @@
 package com.yangxinyu.smkt.ui;
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.View;
-import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.yangxinyu.smkt.MainActivity;
 import com.yangxinyu.smkt.R;
-import com.yangxinyu.smkt.base.BaseFragment;
-import com.yangxinyu.smkt.model.DefaultRepository;
-import com.yangxinyu.smkt.model.entity.MyActivity;
-import com.yangxinyu.smkt.model.vo.TodoActivityTab;
+import com.yangxinyu.smkt.ui.base.BaseFragment;
+import com.yangxinyu.smkt.repository.entity.ReaderActivity;
+import com.yangxinyu.smkt.ui.viewmodel.TodoViewModel;
+import com.yangxinyu.smkt.ui.vo.TodoActivityTab;
 import com.yangxinyu.smkt.ui.adapter.TodoActivityAdapter;
+import com.yangxinyu.smkt.util.ToastUtil;
+import com.yangxinyu.smkt.util.XLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 待参加-活动列表
+ */
 public class TodoActivityListFragment extends BaseFragment {
     public static final String KEY_MY_ACTIVITY_TYPE = "KEY_MY_ACTIVITY_TYPE";
     public static final String KEY_MY_ACTIVITY_TAB = "KEY_MY_ACTIVITY_TAB";
-    private final TodoActivityAdapter adapter = new TodoActivityAdapter(new ArrayList<>());
-    private MyActivity.ActivityType activityType;
+    private TodoViewModel todoReaderActivityViewModel;
+
+    private final TodoActivityAdapter adapter = new TodoActivityAdapter(new ArrayList<>(),
+            (activity) -> {
+                MainActivity.doSomethingBeforeCheckUserLogin(this, () -> {
+                    ToastUtil.show("TODO签到");
+                });
+            },
+            (activity) -> {
+                MainActivity.doSomethingBeforeCheckUserLogin(this, () -> {
+                    ToastUtil.show("TODO导航");
+                });
+            });
+
+    private ReaderActivity.ActivityType activityType;
     private TodoActivityTab activityTab;
 
     @Override
     public int layoutId() {
-        return R.layout.fragment_todo_activity_list;
+        return R.layout.fragment_activity_list;
     }
 
-    public static TodoActivityListFragment newInstance(MyActivity.ActivityType type, TodoActivityTab tab) {
+    public static TodoActivityListFragment newInstance(ReaderActivity.ActivityType type, TodoActivityTab tab) {
         TodoActivityListFragment fragment = new TodoActivityListFragment();
         Bundle args = new Bundle();
         args.putInt(KEY_MY_ACTIVITY_TYPE, type.ordinal());
@@ -42,28 +59,46 @@ public class TodoActivityListFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     protected void init(View view) {
         super.init(view);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            int type = arguments.getInt(KEY_MY_ACTIVITY_TYPE, MyActivity.ActivityType.Offline.ordinal());
+            int type = arguments.getInt(KEY_MY_ACTIVITY_TYPE, ReaderActivity.ActivityType.Offline.ordinal());
             int tab = arguments.getInt(KEY_MY_ACTIVITY_TAB, TodoActivityTab.All.ordinal());
-            activityType = MyActivity.ActivityType.values()[type];
+            activityType = ReaderActivity.ActivityType.values()[type];
             activityTab = TodoActivityTab.values()[tab];
             System.out.println("tab:" + tab + ",type:" + type);
             initRecyclerView(view);
         }
+        todoReaderActivityViewModel = new ViewModelProvider(this).get(TodoViewModel.class);
+        todoReaderActivityViewModel.todoActivities.observe(this, (activities) -> {
+            refreshRecyclerView(activities);
+        });
+        todoReaderActivityViewModel.getTodoActivitiesEffect.observe(this, (effect) -> {
+            switch (effect) {
+
+                case Idle:
+                    setRefreshing(false);
+                    break;
+                case Start:
+                    setRefreshing(true);
+                    break;
+                case Success:
+                case Fail:
+                    todoReaderActivityViewModel.resetGetTodoActivitiesEffect();
+                    break;
+            }
+        });
 
         SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.main);
         swipeRefreshLayout.setOnRefreshListener(this::loadData);
-        swipeRefreshLayout.setRefreshing(true);
-        this.loadData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        XLog.i("TodoActivityListFragment onResume");
+        loadData();
     }
 
     private void initRecyclerView(View view) {
@@ -72,46 +107,18 @@ public class TodoActivityListFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
     }
 
-    private void refreshRecyclerView(List<MyActivity> list) {
+    private void refreshRecyclerView(List<ReaderActivity> list) {
         adapter.setData(list);
     }
 
-    private void loadData() {
-        new Thread(() -> {
-            List<MyActivity.ActivityClass> classes = new ArrayList<>();
-            switch (activityTab) {
-                case All:
-                    classes.add(MyActivity.ActivityClass.Book);
-                    classes.add(MyActivity.ActivityClass.Film);
-                    classes.add(MyActivity.ActivityClass.Magic);
-                    classes.add(MyActivity.ActivityClass.Tea);
-                    break;
-                case Book:
-                    classes.add(MyActivity.ActivityClass.Book);
-                    break;
-                case Film:
-                    classes.add(MyActivity.ActivityClass.Film);
-                    break;
-                case Tea:
-                    classes.add(MyActivity.ActivityClass.Tea);
-                    break;
-                case Magic:
-                    classes.add(MyActivity.ActivityClass.Magic);
-                    break;
-            }
-            DefaultRepository.getInstance().getTodoActivities(activityType, classes, (list) -> {
-                runOnUiThread(() -> {
-                    refreshRecyclerView(list);
-                    finishRefresh();
-                });
-            });
-        }).start();
-    }
-
-    private void finishRefresh() {
+    private void setRefreshing(boolean refresh) {
         View view = getView();
         if (view == null) return;
         SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.main);
-        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setRefreshing(refresh);
+    }
+
+    private void loadData() {
+        todoReaderActivityViewModel.getTodoActivities(activityType, activityTab);
     }
 }

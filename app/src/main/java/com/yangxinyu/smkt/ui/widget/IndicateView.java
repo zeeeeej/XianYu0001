@@ -11,7 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.yangxinyu.smkt.R;
+import com.yangxinyu.smkt.util.XLog;
 
+/**
+ * 指示器
+ */
 public class IndicateView extends View {
     private int max = 0;
     private int progress = 0;
@@ -19,7 +23,6 @@ public class IndicateView extends View {
     private Paint paint;
     private int progressColor;
     private int otherColor;
-
 
     public IndicateView(Context context) {
         super(context);
@@ -50,7 +53,17 @@ public class IndicateView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         float w = max * (getContext().getResources().getDimension(R.dimen.indicate_default_line_width));
         float h = getContext().getResources().getDimension(R.dimen.indicate_default_line_height);
+        XLog.i("IndicateView", "onMeasure w=" + w + ",h=" + h);
         setMeasuredDimension((int) w, (int) h);
+    }
+
+    @Override
+    public void requestLayout() {
+        super.requestLayout();
+        measure(
+                MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.EXACTLY)
+        );
     }
 
     @Override
@@ -74,12 +87,14 @@ public class IndicateView extends View {
     }
 
     public void setMax(int max) {
+        if (max == 0 || max < progress) return;
         this.max = max;
-        invalidate();
+        requestLayout();
     }
 
     public void setProgress(int progress) {
+        if (progress > max) return;
         this.progress = progress;
-        invalidate();
+        requestLayout();
     }
 }

@@ -1,5 +1,6 @@
-package com.yangxinyu.smkt.model.vo;
+package com.yangxinyu.smkt.ui.vo;
 
+/** 已完成活动tab */
 public enum DoneActivityTab {
     All,
     Book,

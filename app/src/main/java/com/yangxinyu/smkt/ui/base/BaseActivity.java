@@ -1,4 +1,4 @@
-package com.yangxinyu.smkt.base;
+package com.yangxinyu.smkt.ui.base;
 
 import android.os.Bundle;
 
@@ -10,7 +10,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.yangxinyu.smkt.R;
-
 
 public abstract class BaseActivity extends AppCompatActivity {
 

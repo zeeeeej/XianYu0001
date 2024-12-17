@@ -1,7 +1,10 @@
-package com.yangxinyu.smkt.model.vo;
+package com.yangxinyu.smkt.ui.vo;
 
 import com.yangxinyu.smkt.R;
 
+/**
+ * 主页Tab
+ */
 public enum Tab {
 
     Offline(R.mipmap.ic_home_tab_offline, R.mipmap.ic_home_tab_offline_sel, "offline"),

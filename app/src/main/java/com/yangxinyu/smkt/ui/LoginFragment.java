@@ -1,49 +1,38 @@
 package com.yangxinyu.smkt.ui;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.yangxinyu.smkt.R;
-import com.yangxinyu.smkt.base.BaseFragment;
-import com.yangxinyu.smkt.model.DefaultRepository;
-import com.yangxinyu.smkt.model.entity.User;
+import com.yangxinyu.smkt.repository.DefaultRepository;
+import com.yangxinyu.smkt.ui.viewmodel.MainViewModel;
 import com.yangxinyu.smkt.util.ToastUtil;
 
-public class LoginFragment extends BaseFragment {
+/**
+ * 登录页面
+ */
+public class LoginFragment extends DialogFragment {
 
-    //    private MainViewModel viewModel;
     private boolean checked = false;
+    private MainViewModel viewModel;
 
     public LoginFragment() {
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        // 获取和Activity同一个MainViewModel对象
-//        viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-//        viewModel.loginStatusLiveData.observe(this, (status) -> {
-//            updateCommitButton(status != null && status.isDoing());
-//            if (status == null) return;
-//            if (status.isSuccess()) {
-//                ToastUtil.show("登录成功");
-//            } else {
-//                ToastUtil.show("登录失败");
-//            }
-//            viewModel.resetLogin();
-//        });
-//
-//        viewModel.userLiveData.observe(this, (user) -> {
-//            if (user != null) {
-//                dismiss();
-//            }
-//        });
+        super(R.layout.fragment_login);
     }
 
     public static LoginFragment newInstance() {
@@ -54,8 +43,59 @@ public class LoginFragment extends BaseFragment {
     }
 
     @Override
-    public int layoutId() {
-        return R.layout.fragment_login;
+    public void onResume() {
+        super.onResume();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            Window window = dialog.getWindow();
+            if (window != null) {
+                int width = ViewGroup.LayoutParams.MATCH_PARENT;
+                int height = ViewGroup.LayoutParams.MATCH_PARENT;
+                window.setLayout(width, height);
+            }
+        }
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            Window window = dialog.getWindow();
+            if (window != null) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                window.setWindowAnimations(R.style.Dialog_Bottom_Style);
+            }
+        }
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        viewModel.loginEffect.observe(this,(effect)->{
+            switch (effect){
+
+                case Idle:
+                    updateCommitButton(false);
+                    break;
+                case Start:
+                    updateCommitButton(true);
+                    break;
+                case Success:
+                    ToastUtil.show("登录成功");
+                    viewModel.resetLoginEffect();
+                    dismiss();
+                    break;
+                case Fail:
+                    updateCommitButton(false);
+                    ToastUtil.show("登录失败");
+                    break;
+            }
+        });
     }
 
     @Override
@@ -76,31 +116,17 @@ public class LoginFragment extends BaseFragment {
             checkView.setImageResource(checkDrawable());
         });
         agreementView.setOnClickListener((v) -> {
-            ToastUtil.show("TODO");
+            ToastUtil.show("TODO用户协议");
         });
         privacyView.setOnClickListener((v) -> {
-            ToastUtil.show("TODO");
+            ToastUtil.show("TODO隐私协议");
         });
         commitView.setOnClickListener((v) -> {
             if (checked) {
                 updateCommitButton(true);
-                DefaultRepository.getInstance().checkLogin(new DefaultRepository.LoginCallback() {
-                    @Override
-                    public void onSuccess(User user) {
-                        runOnUiThread(() -> {
-                            ToastUtil.show("登录成功");
-                            dismiss();
-                        });
-                    }
+                String username = DefaultRepository.DEFAULT_USER;
 
-                    @Override
-                    public void onFail(String msg) {
-                        runOnUiThread(() -> {
-                            updateCommitButton(false);
-                            ToastUtil.show(msg);
-                        });
-                    }
-                });
+                viewModel.login(username);
             } else {
                 ToastUtil.show("请阅读用户协议和隐私协议并勾选然后登录");
             }
@@ -121,15 +147,19 @@ public class LoginFragment extends BaseFragment {
         return checked ? R.mipmap.ic_login_check_on : R.mipmap.ic_login_check_off;
     }
 
-    private void dismiss() {
-        try {
-            requireActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(this)
-                    .commitAllowingStateLoss();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//    private void dismiss() {
+//        try {
+//            requireActivity()
+//                    .getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .remove(this)
+//                    .commitAllowingStateLoss();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    protected void runOnUiThread(Runnable runnable) {
+        requireActivity().runOnUiThread(runnable);
     }
 }

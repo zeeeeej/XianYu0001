@@ -1,18 +1,20 @@
 package com.yangxinyu.smkt.ui;
 
 import android.os.Bundle;
+import android.view.View;
 
-import androidx.fragment.app.Fragment;
+import com.yangxinyu.smkt.repository.entity.ReaderActivity;
+import com.yangxinyu.smkt.ui.viewmodel.DoneViewModel;
 
-import com.yangxinyu.smkt.R;
-import com.yangxinyu.smkt.base.BaseFragment;
-import com.yangxinyu.smkt.model.entity.MyActivity;
-
+/**
+ * 主页-线上活动
+ */
 public class HomeOnlinePageFragment extends AbstractHomeDonePageFragment {
 
+    private DoneViewModel viewModel;
     @Override
-    MyActivity.ActivityType activityType() {
-        return MyActivity.ActivityType.Online;
+    ReaderActivity.ActivityType activityType() {
+        return ReaderActivity.ActivityType.Online;
     }
 
     public static HomeOnlinePageFragment newInstance() {
@@ -20,5 +22,11 @@ public class HomeOnlinePageFragment extends AbstractHomeDonePageFragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected void init(View view) {
+
+        super.init(view);
     }
 }

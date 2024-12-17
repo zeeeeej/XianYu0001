@@ -1,29 +1,34 @@
 package com.yangxinyu.smkt;
 
-import static com.yangxinyu.smkt.MainActivity2.LOGIN_FRAGMENT_TAG;
-
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.yangxinyu.smkt.base.BaseActivity;
-import com.yangxinyu.smkt.model.DefaultRepository;
-import com.yangxinyu.smkt.model.vo.Tab;
+import com.yangxinyu.smkt.ui.base.BaseActivity;
+import com.yangxinyu.smkt.repository.entity.User;
+import com.yangxinyu.smkt.ui.vo.Tab;
 import com.yangxinyu.smkt.ui.LoginFragment;
 import com.yangxinyu.smkt.ui.HomeMinePageFragment;
 import com.yangxinyu.smkt.ui.HomeOfflinePageFragment;
 import com.yangxinyu.smkt.ui.HomeOnlinePageFragment;
 import com.yangxinyu.smkt.ui.HomeTodoPageFragment;
+import com.yangxinyu.smkt.ui.viewmodel.MainViewModel;
+import com.yangxinyu.smkt.util.Callback;
+import com.yangxinyu.smkt.util.ToastUtil;
 
 public class MainActivity extends BaseActivity {
+
+    private MainViewModel viewModel;
 
     @Override
     public int layoutId() {
@@ -32,7 +37,47 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init() {
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel.user.observe(this, this::refreshUi);
+        User value = viewModel.user.getValue();
+        if (value==null){
+            showLogin();
+        }
+
         ViewPager2 vp = findViewById(R.id.home_vp);
+        viewModel.loginEffect.observe(this, (effect) -> {
+            switch (effect) {
+
+                case Idle:
+                    break;
+                case Start:
+                    break;
+                case Success:
+                    vp.setCurrentItem(0);
+                    break;
+                case Fail:
+
+                    break;
+            }
+        });
+        viewModel.loginOutEffect.observe(this, (effect) -> {
+            switch (effect) {
+
+                case Idle:
+                    break;
+                case Start:
+                    break;
+                case Success:
+                    ToastUtil.show("退出成功");
+                    vp.setCurrentItem(0);
+                    showLogin();
+                    viewModel.resetLoginOutEffect();
+                    break;
+                case Fail:
+
+                    break;
+            }
+        });
         vp.setUserInputEnabled(false);
         View todoTabView = findViewById(R.id.home_tab_todo);
         View offlineTabView = findViewById(R.id.home_tab_offline);
@@ -41,7 +86,7 @@ public class MainActivity extends BaseActivity {
         Tab[] values = Tab.values();
         int size = values.length;
         vp.setOffscreenPageLimit(size);
-        vp.setAdapter(new FragmentStateAdapter(this) {
+        vp.setAdapter(new FragmentStateAdapter(getSupportFragmentManager(), this.getLifecycle()) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -107,13 +152,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkLogin();
-    }
-
-
     private void refreshTitleAndBackground(Tab tab) {
         TextView titleView = findViewById(R.id.home_title);
         View iconView = findViewById(R.id.home_title_icon);
@@ -150,10 +188,9 @@ public class MainActivity extends BaseActivity {
             titleView.setText(title);
         }
         if (backgroundColor != 0) {
-            if (DefaultRepository.getInstance().checkLogin()){
+            if (getSupportFragmentManager().findFragmentByTag(LOGIN_FRAGMENT_TAG) != null) {
                 mainView.setBackgroundColor(Color.WHITE);
-            }else{
-
+            } else {
                 mainView.setBackgroundResource(backgroundColor);
             }
         }
@@ -207,22 +244,72 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    private void refreshUi(User user) {
+        if (user == null) {
+            View mainView = findViewById(R.id.main);
+            mainView.setBackgroundColor(Color.WHITE);
+        } else {
+            dismissFragment();
+        }
+    }
 
-    private void checkLogin() {
-        if (DefaultRepository.getInstance().checkLogin()) {
-            showFragment(LoginFragment.newInstance());
+    public void showLogin() {
+        showFragment(LoginFragment.newInstance());
+    }
+
+    public static final String LOGIN_FRAGMENT_TAG = "LOGIN_FRAGMENT_TAG";
+
+    private void showFragment(Fragment fragment) {
+
+        try {
+//            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.fragment_container_login, fragment, LOGIN_FRAGMENT_TAG);
+//            fragmentTransaction.commitAllowingStateLoss();
+            FragmentManager supportFragmentManager = getSupportFragmentManager();
+            Fragment loginFragment = supportFragmentManager.findFragmentByTag(LOGIN_FRAGMENT_TAG);
+
+            if (loginFragment != null) {
+                ((DialogFragment) loginFragment).dismiss();
+
+            }
+            LoginFragment newFragment = new LoginFragment();
+            newFragment.show(getSupportFragmentManager(), LOGIN_FRAGMENT_TAG);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void dismissFragment() {
+        try {
+//            FragmentManager supportFragmentManager = getSupportFragmentManager();
+//
+//            Fragment fragment = supportFragmentManager.findFragmentByTag(LOGIN_FRAGMENT_TAG);
+//            if (fragment != null) {
+//                FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+//                fragmentTransaction.remove(fragment);
+//                fragmentTransaction.commitAllowingStateLoss();
+//            }
+            FragmentManager supportFragmentManager = getSupportFragmentManager();
+            Fragment loginFragment = supportFragmentManager.findFragmentByTag(LOGIN_FRAGMENT_TAG);
+            if (loginFragment != null) {
+                ((DialogFragment) loginFragment).dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
 
-    private void showFragment(Fragment fragment) {
-        try {
-            FragmentManager supportFragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container_login, fragment, LOGIN_FRAGMENT_TAG);
-            fragmentTransaction.commitAllowingStateLoss();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static void doSomethingBeforeCheckUserLogin(Fragment fragment, Callback callback) {
+        FragmentActivity fragmentActivity = fragment.requireActivity();
+        if (fragmentActivity instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) fragmentActivity;
+            User user = mainActivity.viewModel.user.getValue();
+            if (user == null) {
+                mainActivity.showLogin();
+            } else {
+                callback.call();
+            }
         }
     }
 }

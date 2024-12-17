@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * fix下拉刷新和ViewPager滑动易冲突
+ */
 public class FixedRecyclerView extends RecyclerView {
 
     public FixedRecyclerView(@NonNull Context context) {

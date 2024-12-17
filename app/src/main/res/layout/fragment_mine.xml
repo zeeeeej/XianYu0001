@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".MainActivity">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,9 +61,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="ID："
                     android:textColor="@color/text_ff383838"
-                    android:textSize="12sp"
-                    android:text="ID：" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/mine_id_value"
@@ -237,6 +238,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!-- 我发起的活动 -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mine_item_pub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mine_common_margin"
@@ -319,11 +321,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(0)"
-                    tools:text="(5)"
                     android:textColor="@color/mine_item_text"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/mine_item_done_text"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="(5)" />
 
                 <ImageView
                     android:layout_width="@dimen/mine_item_back_icon_size"
@@ -334,23 +336,32 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/mine_done_vp"
-                android:layout_marginTop="@dimen/mine_common_margin"
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="104dp"
-                android:orientation="horizontal" />
+                android:layout_height="match_parent">
+
+                <include layout="@layout/view_empty_data" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/mine_done_vp"
+                    android:layout_width="match_parent"
+                    android:layout_height="104dp"
+                    android:layout_marginTop="@dimen/mine_common_margin"
+                    android:orientation="horizontal" />
+            </FrameLayout>
 
             <!-- 指示器 -->
             <com.yangxinyu.smkt.ui.widget.IndicateView
                 android:id="@+id/mine_activity_indicate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                />
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
+
         <!-- 我的历史活动 -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mine_item_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mine_common_margin"
@@ -392,6 +403,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!-- 联系我们 -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mine_item_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mine_common_margin"
@@ -433,6 +445,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!-- 兑换码 -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mine_item_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/mine_common_margin"
@@ -476,5 +489,7 @@
 
     </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 

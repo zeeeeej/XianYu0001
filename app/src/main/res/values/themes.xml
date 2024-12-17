@@ -23,4 +23,9 @@
         <item name="android:textColor">@color/home_tab_text</item>
     </style>
 
+    <style name="Dialog_Bottom_Style" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_out</item>
+    </style>
+
 </resources>

@@ -8,15 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.yangxinyu.smkt.R;
-import com.yangxinyu.smkt.base.BaseFragment;
-import com.yangxinyu.smkt.model.entity.MyActivity;
+import com.yangxinyu.smkt.ui.base.BaseFragment;
+import com.yangxinyu.smkt.repository.entity.ReaderActivity;
 import com.yangxinyu.smkt.util.StringUtil;
 
+/**
+ * 我的-已参加活动
+ */
 public class MineDoneFragment extends BaseFragment {
     public static final String KEY_MY_ACTIVITY = "MyActivity";
     public static final String KEY_MAX = "Max";
     public static final String KEY_PROGRESS = "Progress";
-    public static final String PATTERN_ACTIVITY = "MM.dd  HH:mm  EEEE";
     private static final String PROGRESS_AND = "/";
 
     @Override
@@ -24,7 +26,7 @@ public class MineDoneFragment extends BaseFragment {
         return R.layout.fragment_done;
     }
 
-    public static MineDoneFragment newInstance(MyActivity myActivity, int progress, int max) {
+    public static MineDoneFragment newInstance(ReaderActivity myActivity, int progress, int max) {
         MineDoneFragment fragment = new MineDoneFragment();
         Bundle args = new Bundle();
         args.putParcelable(KEY_MY_ACTIVITY, myActivity);
@@ -45,12 +47,14 @@ public class MineDoneFragment extends BaseFragment {
         super.init(view);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            MyActivity myActivity = arguments.getParcelable(KEY_MY_ACTIVITY);
+            ReaderActivity myActivity = arguments.getParcelable(KEY_MY_ACTIVITY);
             int progress = arguments.getInt(KEY_PROGRESS, 0);
             int max = arguments.getInt(KEY_MAX, 0);
             refreshActivity(myActivity);
             refreshProgress(progress, max);
         }
+
+
     }
 
     private void refreshProgress(int progress, int max) {
@@ -60,7 +64,7 @@ public class MineDoneFragment extends BaseFragment {
         progressView.setText((progress + 1) + PROGRESS_AND + max);
     }
 
-    private void refreshActivity(MyActivity myActivity) {
+    private void refreshActivity(ReaderActivity myActivity) {
         View view = getView();
         if (view == null) return;
         ImageView iconView = view.findViewById(R.id.activity_icon);
@@ -81,7 +85,7 @@ public class MineDoneFragment extends BaseFragment {
             }
             typeView.setText(type);
             nameView.setText(myActivity.getName());
-            datetimeView.setText(StringUtil.datetime2str(myActivity.getDatetime(), PATTERN_ACTIVITY));
+            datetimeView.setText(StringUtil.datetime2str(myActivity.getDatetime(), StringUtil.PATTERN_ACTIVITY));
             addressView.setText(myActivity.getAddress());
         }
 

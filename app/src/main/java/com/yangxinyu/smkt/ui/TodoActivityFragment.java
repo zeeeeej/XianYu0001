@@ -15,23 +15,26 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.yangxinyu.smkt.R;
-import com.yangxinyu.smkt.base.BaseFragment;
-import com.yangxinyu.smkt.model.entity.MyActivity;
-import com.yangxinyu.smkt.model.vo.TodoActivityTab;
-import com.yangxinyu.smkt.ui.widget.DefaultPageTransformer;
+import com.yangxinyu.smkt.ui.base.BaseFragment;
+import com.yangxinyu.smkt.repository.entity.ReaderActivity;
+import com.yangxinyu.smkt.ui.vo.TodoActivityTab;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * 待参加-活动
+ * Tab+VP2
+ */
 public class TodoActivityFragment extends BaseFragment {
     public static final String KEY_MY_ACTIVITY_TYPE = "KEY_MY_ACTIVITY_TYPE";
-    private MyActivity.ActivityType activityType;
+    private ReaderActivity.ActivityType activityType;
 
     @Override
     public int layoutId() {
         return R.layout.fragment_todo_activity;
     }
 
-    public static TodoActivityFragment newInstance(MyActivity.ActivityType type) {
+    public static TodoActivityFragment newInstance(ReaderActivity.ActivityType type) {
         TodoActivityFragment fragment = new TodoActivityFragment();
         Bundle args = new Bundle();
         args.putInt(KEY_MY_ACTIVITY_TYPE, type.ordinal());
@@ -50,8 +53,8 @@ public class TodoActivityFragment extends BaseFragment {
         super.init(view);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            int type = arguments.getInt(KEY_MY_ACTIVITY_TYPE, MyActivity.ActivityType.Offline.ordinal());
-            activityType = MyActivity.ActivityType.values()[type];
+            int type = arguments.getInt(KEY_MY_ACTIVITY_TYPE, ReaderActivity.ActivityType.Offline.ordinal());
+            activityType = ReaderActivity.ActivityType.values()[type];
         }
 
         initViewPager(view);
@@ -63,9 +66,8 @@ public class TodoActivityFragment extends BaseFragment {
         ViewPager2 vpView = view.findViewById(R.id.todo_activity_vp);
         TodoActivityTab[] values = TodoActivityTab.values();
         vpView.setUserInputEnabled(true);
-        vpView.setPageTransformer(new DefaultPageTransformer());
 
-        vpView.setAdapter(new FragmentStateAdapter(this) {
+        vpView.setAdapter(new FragmentStateAdapter(getChildFragmentManager(), getLifecycle()) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -109,9 +111,6 @@ public class TodoActivityFragment extends BaseFragment {
             if (customView == null) {
                 View contentView = LayoutInflater.from(requireContext()).inflate(R.layout.view_todo_activity_tab, null, false);
                 TextView textView = contentView.findViewById(R.id.text);
-//            int selectedTabPosition = vpView.getCurrentItem();
-//            boolean selected = position == selectedTabPosition;
-//            contentView.setBackgroundResource(selected?R.drawable.todo_activity_tab_bg_sel:R.drawable.todo_activity_tab_bg_normal);
                 TodoActivityTab value = values[position];
                 String title = "";
                 switch (value) {
@@ -132,7 +131,6 @@ public class TodoActivityFragment extends BaseFragment {
                         break;
                 }
                 textView.setText(title);
-//            textView.setTextColor(selected? Color.WHITE:getResources().getColor(R.color.todo_activity_tab_normal));
                 tab.setCustomView(contentView);
             }
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context=".LoginActivity">
+    tools:context=".MainActivity">
 
     <com.google.android.material.tabs.TabLayout
         app:layout_constraintTop_toTopOf="parent"

@@ -1,4 +1,4 @@
-package com.yangxinyu.smkt.base;
+package com.yangxinyu.smkt.ui.base;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +17,6 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.yangxinyu.smkt.R;
-
 
 public abstract class BaseFragment extends Fragment {
     protected Handler handler = new Handler(Looper.getMainLooper());

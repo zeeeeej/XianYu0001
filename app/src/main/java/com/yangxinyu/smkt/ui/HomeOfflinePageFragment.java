@@ -2,8 +2,11 @@ package com.yangxinyu.smkt.ui;
 
 import android.os.Bundle;
 
-import com.yangxinyu.smkt.model.entity.MyActivity;
+import com.yangxinyu.smkt.repository.entity.ReaderActivity;
 
+/**
+ * 主页-线下活动
+ */
 public class HomeOfflinePageFragment extends AbstractHomeDonePageFragment {
 
 
@@ -15,7 +18,7 @@ public class HomeOfflinePageFragment extends AbstractHomeDonePageFragment {
     }
 
     @Override
-    MyActivity.ActivityType activityType() {
-        return MyActivity.ActivityType.Offline;
+    ReaderActivity.ActivityType activityType() {
+        return ReaderActivity.ActivityType.Offline;
     }
 }

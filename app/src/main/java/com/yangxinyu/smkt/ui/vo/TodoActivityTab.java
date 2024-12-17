@@ -1,5 +1,8 @@
-package com.yangxinyu.smkt.model.vo;
+package com.yangxinyu.smkt.ui.vo;
 
+/**
+ * 待参加活动tab
+ */
 public enum TodoActivityTab {
     All,
     Book,
@@ -8,3 +11,5 @@ public enum TodoActivityTab {
     Magic,
     ;
 }
+
+

@@ -28,4 +28,9 @@ public class StringUtil {
             return simpleDateFormat.format(new Date(timestamp));
         }
     }
+
+    public static final String PATTERN_MM_DD = "MM.dd";
+    public static final String PATTERN_EEEE= "EEEE";
+    public static final String PATTERN_ACTIVITY = "MM.dd  HH:mm  EEEE";
+    public static final String PATTERN_ACTIVITY_PUBLISH = "YYYY-MM-dd  HH:mm";
 }

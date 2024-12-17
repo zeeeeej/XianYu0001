@@ -10,17 +10,32 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yangxinyu.smkt.R;
-import com.yangxinyu.smkt.model.entity.MyActivity;
-import com.yangxinyu.smkt.ui.MineDoneFragment;
+import com.yangxinyu.smkt.repository.entity.ReaderActivity;
 import com.yangxinyu.smkt.util.StringUtil;
 
 import java.util.List;
 
-public class TodoActivityAdapter extends DiffAdapter<MyActivity> {
+/**
+ * 未完成 活动Adapter
+ */
+public class TodoActivityAdapter extends DiffAdapter<ReaderActivity> {
 
+    public interface OnSignedClickListener {
+        void onSigned(ReaderActivity activity);
 
-    public TodoActivityAdapter(List<MyActivity> list) {
+    }
+
+    public interface OnNavigationClickListener {
+        void onNavigation(ReaderActivity activity);
+    }
+
+    private OnSignedClickListener onSignedClickListener;
+    private OnNavigationClickListener onNavigationClickListener;
+
+    public TodoActivityAdapter(List<ReaderActivity> list, OnSignedClickListener onSignedClickListener, OnNavigationClickListener onNavigationClickListener) {
         super(list);
+        this.onSignedClickListener = onSignedClickListener;
+        this.onNavigationClickListener = onNavigationClickListener;
     }
 
     @NonNull
@@ -33,20 +48,20 @@ public class TodoActivityAdapter extends DiffAdapter<MyActivity> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Log.i("TodoActivityAdapter", "onBindViewHolder : " + getList().size());
-        MyActivity data = getList().get(position);
+        ReaderActivity data = getList().get(position);
         View itemView = holder.itemView;
         TextView dateTimeView = itemView.findViewById(R.id.activity_datetime);
         TextView nameView = itemView.findViewById(R.id.activity_name);
         TextView addressView = itemView.findViewById(R.id.activity_address);
         TextView nicknameView = itemView.findViewById(R.id.activity_nickname);
         TextView signActionView = itemView.findViewById(R.id.activity_action_sign);
-        TextView signView = itemView.findViewById(R.id.activity_sign);
-        dateTimeView.setText(StringUtil.datetime2str(data.getDatetime(), MineDoneFragment.PATTERN_ACTIVITY));
+        View navigationView = itemView.findViewById(R.id.todo_nav);
+        dateTimeView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_ACTIVITY));
         nameView.setText(data.getName());
         addressView.setText(data.getAddress());
         nicknameView.setText(data.getPublisher().getNickname());
-        MyActivity.ActivityStatus status = data.getStatus();
-        MyActivity.ActivitySigned signed = data.getSigned();
+        ReaderActivity.ActivityStatus status = data.getStatus();
+        ReaderActivity.ActivitySigned signed = data.getSigned();
 
         String statusText = "";
         boolean enable = false;
@@ -61,7 +76,7 @@ public class TodoActivityAdapter extends DiffAdapter<MyActivity> {
                 background = R.drawable.activity_action_sign_bg_disable;
                 break;
             case Doing:
-                boolean done = signed == MyActivity.ActivitySigned.Done;
+                boolean done = signed == ReaderActivity.ActivitySigned.Done;
                 statusText = done ? "已签到" : "签到";
                 enable = !done;
                 background = done ? R.drawable.activity_action_sign_bg_disable : R.drawable.activity_action_sign_bg;
@@ -71,6 +86,16 @@ public class TodoActivityAdapter extends DiffAdapter<MyActivity> {
         signActionView.setText(statusText);
         signActionView.setEnabled(enable);
         signActionView.setBackgroundResource(background);
+        signActionView.setOnClickListener((v)->{
+            if (this.onSignedClickListener!=null){
+                this.onSignedClickListener.onSigned(data);
+            }
+        });
+        navigationView.setOnClickListener((v)->{
+            if (this.onNavigationClickListener!=null){
+                this.onNavigationClickListener.onNavigation(data);
+            }
+        });
     }
 
 
@@ -79,29 +104,4 @@ public class TodoActivityAdapter extends DiffAdapter<MyActivity> {
             super(itemView);
         }
     }
-
-    public static class BookVH extends RecyclerView.ViewHolder {
-        public BookVH(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
-
-    public static class TeaVH extends RecyclerView.ViewHolder {
-        public TeaVH(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
-
-    public static class MagicVH extends RecyclerView.ViewHolder {
-        public MagicVH(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
-
-    public static class FilmVH extends RecyclerView.ViewHolder {
-        public FilmVH(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
-
 }

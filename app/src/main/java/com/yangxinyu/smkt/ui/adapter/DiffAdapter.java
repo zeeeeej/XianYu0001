@@ -23,12 +23,11 @@ abstract class DiffAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void setData(List<T> source) {
-        MyDiffCallback diffCallback = new MyDiffCallback(list, source);
+//        MyDiffCallback diffCallback = new MyDiffCallback(list, source);
         list.clear();
         list.addAll(source);
 //        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
 //        diffResult.dispatchUpdatesTo(this);
-
         notifyDataSetChanged();
     }
 
