@@ -30,6 +30,6 @@ public interface Datasource {
     boolean updateActivity(@NotNull ReaderActivity activity);
 
     @NotNull
-    List<ReaderActivity> allMyActivities();
+    List<ReaderActivity> allReaderActivities();
 
 }

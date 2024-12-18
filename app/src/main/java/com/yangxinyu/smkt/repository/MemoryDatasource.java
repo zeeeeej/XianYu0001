@@ -17,8 +17,7 @@ import java.util.Random;
  */
 public class MemoryDatasource implements Datasource {
     private final Random random = new Random();
-    public static final String DEFAULT_USER = "yangxinyu";
-    public static final String DEFAULT_USER_ID = "0000000001";
+
 
     /* 所有活动*/
     private final List<User> allUsers = new ArrayList<>();
@@ -27,61 +26,13 @@ public class MemoryDatasource implements Datasource {
     {
         synchronized (this) {
             new Thread(() -> {
-                User root = new User(DEFAULT_USER, DEFAULT_USER_ID, DEFAULT_USER);
+                User root = new User(Mock.DEFAULT_USERNAME, Mock.DEFAULT_USER_ID, Mock.DEFAULT_USER);
                 allUsers.add(root);
-                ReaderActivity myActivity;
-                for (int i = 0; i < 30; i++) {
-                    myActivity = new ReaderActivity();
-                    ReaderActivity.ActivityClass[] classes = ReaderActivity.ActivityClass.values();
-                    ReaderActivity.ActivityClass clz = classes[random.nextInt(classes.length)];
-                    myActivity.setClz(clz);
-                    String name = "";
-                    switch (clz) {
-                        case Book:
-                            name = "书籍";
-                            break;
-                        case Film:
-                            name = "电影";
-                            break;
-                        case Tea:
-                            name = "茶话会";
-                            break;
-                        case Magic:
-                            name = "创意活动";
-                            break;
-                    }
-                    myActivity.setName("随机" + name + i);
-
-                    myActivity.setDatetime(System.currentTimeMillis() + 3600 * 24 * i * 1000L);
-                    ReaderActivity.ActivityType activityType = i % 2 == 0 ? ReaderActivity.ActivityType.Offline : ReaderActivity.ActivityType.Online;
-                    myActivity.setType(activityType);
-                    String address = "";
-                    switch (activityType) {
-
-                        case Offline:
-                            address = "地点位置地点位置地点位置地点位";
-                            break;
-                        case Online:
-                            address = "腾讯会议";
-
-                            break;
-                    }
-                    myActivity.setAddress(address + i);
-
-                    int total = 5 + random.nextInt(10);
-                    myActivity.setPublisherTotalNumber(total);
-                    myActivity.setPublisherSignedNumber(random.nextInt(total));
-                    myActivity.setPublisher(root);
-                    myActivity.setPublisherDatetime(System.currentTimeMillis() - +3600 * 24 * i * 1000L);
-                    ReaderActivity.ActivitySigned[] values = ReaderActivity.ActivitySigned.values();
-                    myActivity.setSigned(values[random.nextInt(values.length)]);
-                    ReaderActivity.ActivityStatus[] statues = ReaderActivity.ActivityStatus.values();
-                    myActivity.setStatus(statues[random.nextInt(statues.length)]);
-                    allActivities.add(myActivity);
-                }
+                List<ReaderActivity> readerActivities = Mock.mockList(random, root);
+                allActivities.clear();
+                allActivities.addAll(readerActivities);
             }).start();
         }
-
     }
 
     @Override
@@ -225,7 +176,9 @@ public class MemoryDatasource implements Datasource {
 
     @NonNull
     @Override
-    public List<ReaderActivity> allMyActivities() {
-        return new ArrayList<>(allActivities);
+    public List<ReaderActivity> allReaderActivities() {
+        synchronized (this) {
+            return new ArrayList<>(allActivities);
+        }
     }
 }

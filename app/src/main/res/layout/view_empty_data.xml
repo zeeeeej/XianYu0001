@@ -2,17 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <TextView
+        android:id="@+id/empty_view"
         android:layout_gravity="center"
         app:layout_constraintLeft_toLeftOf="@id/done_vp"
         app:layout_constraintRight_toRightOf="@id/done_vp"
         app:layout_constraintTop_toTopOf="@id/done_vp"
         app:layout_constraintBottom_toBottomOf="@id/done_vp"
-        android:text="没有更多数据～"
+        android:text="没有数据～"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

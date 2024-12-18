@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yangxinyu.smkt.R;
 import com.yangxinyu.smkt.repository.entity.ReaderActivity;
+import com.yangxinyu.smkt.util.AndroidUtil;
 import com.yangxinyu.smkt.util.StringUtil;
 
 import java.util.List;
@@ -58,7 +59,9 @@ public class TodoActivityAdapter extends DiffAdapter<ReaderActivity> {
         View navigationView = itemView.findViewById(R.id.todo_nav);
         dateTimeView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_ACTIVITY));
         nameView.setText(data.getName());
-        addressView.setText(data.getAddress());
+        AndroidUtil.applyAddress(holder.itemView.getContext(),addressView,data.getAddress());
+//        addressView.setText(data.getAddress());
+
         nicknameView.setText(data.getPublisher().getNickname());
         ReaderActivity.ActivityStatus status = data.getStatus();
         ReaderActivity.ActivitySigned signed = data.getSigned();

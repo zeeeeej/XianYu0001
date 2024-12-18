@@ -2,6 +2,7 @@ package com.yangxinyu.smkt.repository;
 
 import com.yangxinyu.smkt.repository.entity.ReaderActivity;
 import com.yangxinyu.smkt.repository.entity.User;
+import com.yangxinyu.smkt.util.XLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,6 @@ import java.util.stream.Collectors;
  */
 public class DefaultRepository {
     private final Datasource datasource = new MemoryDatasource();
-    public static final String DEFAULT_USER = "yangxinyu";
-    public static final String DEFAULT_USER_ID = "0000000001";
     public static final int MOCK_MAX_TIMESTAMP = 1000;
     private final Random random = new Random();
     private final ExecutorService pool = Executors.newCachedThreadPool();
@@ -67,7 +66,7 @@ public class DefaultRepository {
                 return;
             }
             mockCastTime();
-            List<ReaderActivity> activities = datasource.allMyActivities();
+            List<ReaderActivity> activities = datasource.allReaderActivities();
             if (!activities.isEmpty()) {
                 List<ReaderActivity> result = activities.stream()
                         .filter((act) -> act.getStatus() == ReaderActivity.ActivityStatus.Done)
@@ -90,7 +89,7 @@ public class DefaultRepository {
                 return;
             }
             mockCastTime();
-            List<ReaderActivity> activities = datasource.allMyActivities();
+            List<ReaderActivity> activities = datasource.allReaderActivities();
             if (!activities.isEmpty()) {
                 List<ReaderActivity> result = activities.stream()
                         .filter((act) -> act.getStatus() == ReaderActivity.ActivityStatus.Doing ||
@@ -114,11 +113,18 @@ public class DefaultRepository {
                     String username = SP.getInstance().getUsername();
                     user = datasource.findUser(username);
                     if (user != null) {
+                        pool.execute(() -> {
+                            initMyActivity();
+                        });
+
                         callback.onSuccess(user);
                     } else {
                         callback.onFail("未登录");
                     }
                 } else {
+                    pool.execute(() -> {
+                        initMyActivity();
+                    });
                     callback.onSuccess(user);
                 }
             }
@@ -133,18 +139,7 @@ public class DefaultRepository {
                     User u = datasource.findUser(username);
                     if (u != null) {
                         this.user = u;
-                        List<ReaderActivity> activities = datasource.allMyActivities();
-                        if (allMyActivities.isEmpty()) {
-                            int count = 0;
-                            for (ReaderActivity activity : activities) {
-                                if (count < 5) {
-                                    allMyActivities.add(activity);
-                                    count++;
-                                } else {
-                                    break;
-                                }
-                            }
-                        }
+                        initMyActivity();
                         SP.getInstance().setUsername(u.getUsername());
                         callback.onSuccess(u);
                     } else {
@@ -156,6 +151,23 @@ public class DefaultRepository {
                 }
             }
         });
+    }
+
+    private void initMyActivity() {
+        mockCastTime();
+        List<ReaderActivity> activities = datasource.allReaderActivities();
+        XLog.i("initMyActivity activities :" + activities.size());
+        if (allMyActivities.isEmpty()) {
+            int count = 0;
+            for (ReaderActivity activity : activities) {
+                if (count < 5) {
+                    allMyActivities.add(activity);
+                    count++;
+                } else {
+                    return;
+                }
+            }
+        }
     }
 
     public void loginOut(Consumer<Boolean> callback) {

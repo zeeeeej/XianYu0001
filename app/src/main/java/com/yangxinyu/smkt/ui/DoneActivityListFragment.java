@@ -136,9 +136,16 @@ public class DoneActivityListFragment extends BaseFragment {
     }
 
     private void refreshRecyclerView(List<ReaderActivity> list) {
+        refreshEmptyView(list.isEmpty());
         adapter.setData(list);
     }
 
+    private void refreshEmptyView(boolean empty) {
+        View view = getView();
+        if (view==null)return;
+        View emptyView= view.findViewById(R.id.empty_view);
+        emptyView.setVisibility(empty?View.VISIBLE:View.INVISIBLE);
+    }
 
     private void setRefreshing(boolean refresh) {
         View view = getView();

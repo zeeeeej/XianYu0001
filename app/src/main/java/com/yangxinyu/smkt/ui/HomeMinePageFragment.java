@@ -205,7 +205,8 @@ public class HomeMinePageFragment extends BaseFragment {
         View view = getView();
         if (view == null) return;
         SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.main);
-        swipeRefreshLayout.setRefreshing(refresh);
+        swipeRefreshLayout.setEnabled(false);
+        //swipeRefreshLayout.setRefreshing(refresh);
     }
 
     private static class DoneAdapter extends FragmentStateAdapter {

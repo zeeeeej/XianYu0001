@@ -1,113 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <!-- 返回 -->
-    <ImageView
-        android:padding="16dp"
-        android:id="@+id/login_back"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@mipmap/ic_common_back"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- 背景1 -->
-    <ImageView
-        android:padding="16dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@mipmap/ic_common_back"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- logo -->
-    <ImageView
-        android:id="@+id/login_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/login_logo_margin_left_and_right"
-        android:layout_marginTop="@dimen/login_logo_margin_top"
-        android:layout_marginRight="@dimen/login_logo_margin_left_and_right"
-        android:src="@mipmap/ic_login_logo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- 按钮 -->
-    <Button
-        android:id="@+id/login_commit"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/login_btn_height"
-        android:layout_marginLeft="@dimen/login_btn_margin_left_and_right"
-        android:layout_marginTop="@dimen/login_btn_margin_top"
-        android:layout_marginRight="@dimen/login_btn_margin_left_and_right"
-        android:backgroundTint="@color/login_btn"
-        android:text="@string/login_btn"
-        android:textColor="@color/white"
-        android:textSize="@dimen/login_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_logo"/>
+        android:layout_height="match_parent">
 
-    <!-- 用户协议&隐私 -->
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/login_agreement_privacy_margin_top"
-        app:layout_constraintLeft_toLeftOf="@id/login_commit"
-        app:layout_constraintRight_toRightOf="@id/login_commit"
-        app:layout_constraintTop_toBottomOf="@id/login_commit">
-
+        <!-- 返回 -->
         <ImageView
-            android:src="@drawable/login_check_bg"
-            android:id="@+id/login_check"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:padding="4dp"
-            />
+            android:id="@+id/login_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="16dp"
+            android:src="@mipmap/ic_common_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+
+        <!-- logo -->
+        <ImageView
+            android:id="@+id/login_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_agreement_privacy_prefix"
-            android:textColor="@color/login_agree_privacy_ext"
-            android:textSize="13sp" />
+            android:layout_marginLeft="@dimen/login_logo_margin_left_and_right"
+            android:layout_marginTop="@dimen/login_logo_margin_top"
+            android:layout_marginRight="@dimen/login_logo_margin_left_and_right"
+            android:src="@mipmap/ic_logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/login_agreement"
+        <!-- 按钮 -->
+        <Button
+            android:id="@+id/login_commit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/login_btn_height"
+            android:layout_marginLeft="@dimen/login_btn_margin_left_and_right"
+            android:layout_marginTop="@dimen/login_btn_margin_top"
+            android:layout_marginRight="@dimen/login_btn_margin_left_and_right"
+            android:backgroundTint="@color/login_btn"
+            android:text="@string/login_btn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/login_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_logo" />
+
+        <!-- 用户协议&隐私 -->
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_agreement"
-            android:textColor="@color/login_agree_privacy"
-            android:textSize="13sp" />
+            android:layout_marginTop="@dimen/login_agreement_privacy_margin_top"
+            android:gravity="center_vertical"
+            app:layout_constraintLeft_toLeftOf="@id/login_commit"
+            app:layout_constraintRight_toRightOf="@id/login_commit"
+            app:layout_constraintTop_toBottomOf="@id/login_commit">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_agreement_privacy_and"
-            android:textColor="@color/login_agree_privacy_ext"
-            android:textSize="13sp" />
+            <ImageView
+                android:id="@+id/login_check"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:padding="4dp"
+                android:src="@drawable/login_check_bg" />
 
-        <TextView
-            android:id="@+id/login_privacy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_privacy"
-            android:textColor="@color/login_agree_privacy"
-            android:textSize="13sp" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_agreement_privacy_prefix"
+                android:textColor="@color/login_agree_privacy_ext"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/login_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_agreement"
+                android:textColor="@color/login_agree_privacy"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_agreement_privacy_and"
+                android:textColor="@color/login_agree_privacy_ext"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/login_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_privacy"
+                android:textColor="@color/login_agree_privacy"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
 

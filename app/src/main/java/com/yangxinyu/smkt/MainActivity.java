@@ -38,28 +38,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init() {
+        ViewPager2 vp = findViewById(R.id.home_vp);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.user.observe(this, this::refreshUi);
-        viewModel.checkLoginEffect.observe(this,(effect)->{
-            switch (effect) {
-
-                case Idle:
-                    break;
-                case Start:
-                    break;
-                case Success:
-                    break;
-                case Fail:
-                    showLogin();
-                    break;
-            }
-        });
-
-        viewModel.checkLogin();
-
-
-        ViewPager2 vp = findViewById(R.id.home_vp);
-        viewModel.loginEffect.observe(this, (effect) -> {
+        viewModel.checkLoginEffect.observe(this, (effect) -> {
             switch (effect) {
 
                 case Idle:
@@ -70,10 +52,12 @@ public class MainActivity extends BaseActivity {
                     vp.setCurrentItem(0);
                     break;
                 case Fail:
-
+                    showLogin();
                     break;
             }
         });
+
+        viewModel.checkLogin();
         viewModel.loginOutEffect.observe(this, (effect) -> {
             switch (effect) {
 
@@ -255,15 +239,12 @@ public class MainActivity extends BaseActivity {
     }
 
     private void refreshUi(User user) {
-        if (user == null) {
-
-        } else {
+        if (user != null) {
             ViewPager2 vp = findViewById(R.id.home_vp);
             refreshTitleAndBackground(values[vp.getCurrentItem()]);
             dismissLogin();
         }
     }
-
 
     public static final String LOGIN_FRAGMENT_TAG = "LOGIN_FRAGMENT_TAG";
 
@@ -275,7 +256,7 @@ public class MainActivity extends BaseActivity {
                 ((DialogFragment) loginFragment).dismiss();
             }
             LoginFragment newFragment = new LoginFragment();
-            newFragment.show(getSupportFragmentManager(), LOGIN_FRAGMENT_TAG);
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, newFragment, LOGIN_FRAGMENT_TAG).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -285,8 +266,8 @@ public class MainActivity extends BaseActivity {
         try {
             FragmentManager supportFragmentManager = getSupportFragmentManager();
             Fragment loginFragment = supportFragmentManager.findFragmentByTag(LOGIN_FRAGMENT_TAG);
-            if (loginFragment != null) {
-                ((DialogFragment) loginFragment).dismiss();
+            if (loginFragment!=null){
+                supportFragmentManager.beginTransaction().remove(loginFragment).commit();
             }
         } catch (Exception e) {
             e.printStackTrace();

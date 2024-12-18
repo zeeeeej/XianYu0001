@@ -1,38 +1,37 @@
 package com.yangxinyu.smkt.ui;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.yangxinyu.smkt.R;
 import com.yangxinyu.smkt.repository.DefaultRepository;
+import com.yangxinyu.smkt.repository.Mock;
+import com.yangxinyu.smkt.ui.base.BaseFragment;
 import com.yangxinyu.smkt.ui.viewmodel.MainViewModel;
 import com.yangxinyu.smkt.util.ToastUtil;
 
 /**
  * 登录页面
  */
-public class LoginFragment extends DialogFragment {
+public class LoginFragment extends BaseFragment {
 
     private boolean checked = false;
     private MainViewModel viewModel;
 
-    public LoginFragment() {
-        super(R.layout.fragment_login);
+    @Override
+    public int layoutId() {
+        return R.layout.fragment_login;
     }
 
     public static LoginFragment newInstance() {
@@ -43,42 +42,11 @@ public class LoginFragment extends DialogFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            Window window = dialog.getWindow();
-            if (window != null) {
-                int width = ViewGroup.LayoutParams.MATCH_PARENT;
-                int height = ViewGroup.LayoutParams.MATCH_PARENT;
-                window.setLayout(width, height);
-            }
-        }
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            Window window = dialog.getWindow();
-            if (window != null) {
-                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                window.setWindowAnimations(R.style.Dialog_Bottom_Style);
-            }
-        }
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-        viewModel.loginEffect.observe(this,(effect)->{
-            switch (effect){
-
+        viewModel.loginEffect.observe(this, (effect) -> {
+            switch (effect) {
                 case Idle:
                     updateCommitButton(false);
                     break;
@@ -93,6 +61,7 @@ public class LoginFragment extends DialogFragment {
                 case Fail:
                     updateCommitButton(false);
                     ToastUtil.show("登录失败");
+                    viewModel.resetLoginEffect();
                     break;
             }
         });
@@ -106,6 +75,9 @@ public class LoginFragment extends DialogFragment {
         });
 
         View commitView = view.findViewById(R.id.login_commit);
+        View frameLayout = view.findViewById(R.id.main);
+        frameLayout.setSystemUiVisibility(
+                SYSTEM_UI_FLAG_LAYOUT_STABLE | SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         ImageView checkView = view.findViewById(R.id.login_check);
 
         View agreementView = view.findViewById(R.id.login_agreement);
@@ -124,7 +96,7 @@ public class LoginFragment extends DialogFragment {
         commitView.setOnClickListener((v) -> {
             if (checked) {
                 updateCommitButton(true);
-                String username = DefaultRepository.DEFAULT_USER;
+                String username = Mock.DEFAULT_USERNAME;
 
                 viewModel.login(username);
             } else {
@@ -132,6 +104,7 @@ public class LoginFragment extends DialogFragment {
             }
         });
     }
+
 
     private void updateCommitButton(boolean doing) {
         View view = getView();
@@ -147,19 +120,16 @@ public class LoginFragment extends DialogFragment {
         return checked ? R.mipmap.ic_login_check_on : R.mipmap.ic_login_check_off;
     }
 
-//    private void dismiss() {
-//        try {
-//            requireActivity()
-//                    .getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .remove(this)
-//                    .commitAllowingStateLoss();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    protected void runOnUiThread(Runnable runnable) {
-        requireActivity().runOnUiThread(runnable);
+    private void dismiss() {
+        try {
+            requireActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(this)
+                    .commitAllowingStateLoss();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

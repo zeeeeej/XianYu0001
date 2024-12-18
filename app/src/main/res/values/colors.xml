@@ -17,4 +17,5 @@
     <color name="line">#FFF1F2F8</color>
     <color name="done_tab_normal">#FF808080</color>
     <color name="done_tab_sel">#FF292F46</color>
+    <color name="span">#FF1365C2</color>
 </resources>

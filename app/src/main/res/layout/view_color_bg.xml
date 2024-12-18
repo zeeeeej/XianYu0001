@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".MainActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/login_color_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!-- 背景1234 -->
+        <ImageView
+            android:layout_width="216dp"
+            android:layout_height="102dp"
+            android:layout_marginTop="32dp"
+            android:rotation="18"
+            android:scaleType="centerCrop"
+            android:scaleX="4"
+            android:scaleY="4"
+            android:src="@mipmap/login_bg_img_03"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="254.5dp"
+            android:layout_height="148dp"
+            android:layout_marginTop="-64dp"
+            android:rotation="45"
+            android:scaleX="4"
+            android:scaleY="4"
+            android:src="@mipmap/login_bg_img_02"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <ImageView
+            android:layout_width="127dp"
+            android:layout_height="172dp"
+            android:layout_marginTop="-17dp"
+            android:layout_marginStart="-15dp"
+            android:rotation="18"
+            android:scaleX="4"
+            android:scaleY="4"
+            android:src="@mipmap/login_bg_img_04"
+            android:scaleType="centerCrop"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:layout_width="105.5dp"
+            android:layout_height="105.5dp"
+            android:layout_marginTop="32dp"
+            android:scaleX="4"
+            android:scaleY="4"
+            android:src="@mipmap/login_bg_img_01"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="53dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
+

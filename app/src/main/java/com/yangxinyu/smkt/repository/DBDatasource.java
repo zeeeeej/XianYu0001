@@ -55,7 +55,7 @@ public class DBDatasource implements Datasource{
 
     @NonNull
     @Override
-    public List<ReaderActivity> allMyActivities() {
+    public List<ReaderActivity> allReaderActivities() {
         return null;
     }
 }
