@@ -1,15 +1,14 @@
 package com.yangxinyu.smkt.ui.viewmodel;
 
-import static com.yangxinyu.smkt.ui.viewmodel.MainViewModel.doneClasses;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.yangxinyu.smkt.repository.DefaultRepository;
 import com.yangxinyu.smkt.repository.entity.ReaderActivity;
+import com.yangxinyu.smkt.ui.vo.Converts;
 import com.yangxinyu.smkt.ui.vo.DoneActivityTab;
-import com.yangxinyu.smkt.ui.vo.Effect;
+import com.yangxinyu.smkt.ui.base.Effect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class DoneViewModel extends ViewModel {
     public void getOnlineActivities(DoneActivityTab tab) {
         resetGetOnlineActivitiesEffect();
         _getOnlineActivitiesEffect.postValue(Effect.Start);
-        List<ReaderActivity.ActivityClass> activityClasses = doneClasses(tab);
+        List<ReaderActivity.ActivityClass> activityClasses = Converts.doneClasses(tab);
         DefaultRepository.getInstance().getDoneActivities(ReaderActivity.ActivityType.Online, activityClasses, (activities) -> {
             this._onlineActivities.postValue(activities);
             _getOnlineActivitiesEffect.postValue(Effect.Success);
@@ -41,7 +40,7 @@ public class DoneViewModel extends ViewModel {
     public void getOfflineActivities(DoneActivityTab tab) {
         resetGetOnlineActivitiesEffect();
         _getOfflineActivitiesEffect.postValue(Effect.Start);
-        List<ReaderActivity.ActivityClass> activityClasses = doneClasses(tab);
+        List<ReaderActivity.ActivityClass> activityClasses = Converts.doneClasses(tab);
         DefaultRepository.getInstance().getDoneActivities(ReaderActivity.ActivityType.Offline, activityClasses, (activities) -> {
             this._offlineActivities.postValue(activities);
             _getOfflineActivitiesEffect.postValue(Effect.Success);

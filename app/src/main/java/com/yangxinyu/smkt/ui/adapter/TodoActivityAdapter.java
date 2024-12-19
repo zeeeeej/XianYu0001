@@ -30,8 +30,8 @@ public class TodoActivityAdapter extends DiffAdapter<ReaderActivity> {
         void onNavigation(ReaderActivity activity);
     }
 
-    private OnSignedClickListener onSignedClickListener;
-    private OnNavigationClickListener onNavigationClickListener;
+    private final OnSignedClickListener onSignedClickListener;
+    private final OnNavigationClickListener onNavigationClickListener;
 
     public TodoActivityAdapter(List<ReaderActivity> list, OnSignedClickListener onSignedClickListener, OnNavigationClickListener onNavigationClickListener) {
         super(list);
@@ -57,11 +57,18 @@ public class TodoActivityAdapter extends DiffAdapter<ReaderActivity> {
         TextView nicknameView = itemView.findViewById(R.id.activity_nickname);
         TextView signActionView = itemView.findViewById(R.id.activity_action_sign);
         View navigationView = itemView.findViewById(R.id.todo_nav);
-        dateTimeView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_ACTIVITY));
+        dateTimeView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_ACTIVITY_TODO));
         nameView.setText(data.getName());
-        AndroidUtil.applyAddress(holder.itemView.getContext(),addressView,data.getAddress());
-//        addressView.setText(data.getAddress());
+        switch (data.getType()) {
 
+            case Offline:
+                AndroidUtil.applyAddress(holder.itemView.getContext(), addressView, data.getAddress());
+                break;
+
+            case Online:
+                addressView.setText(data.getAddress());
+                break;
+        }
         nicknameView.setText(data.getPublisher().getNickname());
         ReaderActivity.ActivityStatus status = data.getStatus();
         ReaderActivity.ActivitySigned signed = data.getSigned();
@@ -89,13 +96,13 @@ public class TodoActivityAdapter extends DiffAdapter<ReaderActivity> {
         signActionView.setText(statusText);
         signActionView.setEnabled(enable);
         signActionView.setBackgroundResource(background);
-        signActionView.setOnClickListener((v)->{
-            if (this.onSignedClickListener!=null){
+        signActionView.setOnClickListener((v) -> {
+            if (this.onSignedClickListener != null) {
                 this.onSignedClickListener.onSigned(data);
             }
         });
-        navigationView.setOnClickListener((v)->{
-            if (this.onNavigationClickListener!=null){
+        navigationView.setOnClickListener((v) -> {
+            if (this.onNavigationClickListener != null) {
                 this.onNavigationClickListener.onNavigation(data);
             }
         });

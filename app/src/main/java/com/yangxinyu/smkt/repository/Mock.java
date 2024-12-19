@@ -10,6 +10,7 @@ import java.util.Random;
 public class Mock {
 
     public static final String DEFAULT_USER = "昵称昵称";
+    public static final String DEFAULT_USER_2 = "昵称昵称昵称";
     public static final String DEFAULT_USER_ID = "1234567890";
     public static final String DEFAULT_USERNAME = "1234567890";
 
@@ -38,21 +39,22 @@ public class Mock {
     }
 
     private static String type2Address(ReaderActivity.ActivityType type) {
+
+
         String address = "";
         switch (type) {
-
             case Offline:
-                address = "地点位置地点位置地点位置地点位...";
+                address = "地点位置地点位置地点位置地点位位置地点位置地点位...";
                 break;
             case Online:
                 address = "腾讯会议";
-
                 break;
         }
         return address;
     }
 
-    public static List<ReaderActivity> mockList(Random random, User publisher) {
+    public static List<ReaderActivity> mockList(Random random) {
+        User publisher = new User(Mock.DEFAULT_USERNAME, Mock.DEFAULT_USER_ID, Mock.DEFAULT_USER_2);
         List<ReaderActivity> allActivities = new ArrayList<>();
         ReaderActivity.ActivityStatus[] statues = ReaderActivity.ActivityStatus.values();
         ReaderActivity.ActivitySigned[] signeds = ReaderActivity.ActivitySigned.values();

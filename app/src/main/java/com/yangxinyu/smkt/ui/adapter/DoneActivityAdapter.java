@@ -44,7 +44,8 @@ public class DoneActivityAdapter extends DiffAdapter<ReaderActivity> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ReaderActivity data = getList().get(position);
         View itemView = holder.itemView;
-        TextView dateTimeView = itemView.findViewById(R.id.activity_datetime);
+        TextView dateTimeMonthView = itemView.findViewById(R.id.activity_datetime_month);
+        TextView dateTimeDayView = itemView.findViewById(R.id.activity_datetime_day);
         TextView dateTimeWeekView = itemView.findViewById(R.id.activity_datetime_week);
         TextView nameView = itemView.findViewById(R.id.activity_name);
         TextView detailDatetimeView = itemView.findViewById(R.id.activity_detail_datetime);
@@ -55,7 +56,8 @@ public class DoneActivityAdapter extends DiffAdapter<ReaderActivity> {
         TextView publishDatetime = itemView.findViewById(R.id.activity_publish_datetime);
         View actionView = itemView.findViewById(R.id.activity_action);
 
-        dateTimeView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_MM_DD));
+        dateTimeMonthView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_MM));
+        dateTimeDayView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_DD));
         dateTimeWeekView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_EEEE));
         nameView.setText(data.getName());
         detailDatetimeView.setText(StringUtil.datetime2str(data.getDatetime(), StringUtil.PATTERN_ACTIVITY));

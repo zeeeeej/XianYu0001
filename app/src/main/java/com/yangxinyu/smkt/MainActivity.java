@@ -15,7 +15,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.yangxinyu.smkt.ui.base.BaseActivity;
 import com.yangxinyu.smkt.repository.entity.User;
-import com.yangxinyu.smkt.ui.vo.Tab;
+import com.yangxinyu.smkt.ui.vo.HomeTab;
 import com.yangxinyu.smkt.ui.LoginFragment;
 import com.yangxinyu.smkt.ui.HomeMinePageFragment;
 import com.yangxinyu.smkt.ui.HomeOfflinePageFragment;
@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
 
     private MainViewModel viewModel;
 
-    private final Tab[] values = Tab.values();
+    private final HomeTab[] values = HomeTab.values();
 
     @Override
     public int layoutId() {
@@ -123,12 +123,12 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                Tab tab = values[position];
+                HomeTab tab = values[position];
                 refreshTitleAndBackground(tab);
-                refreshOfflineTab(tab == Tab.Offline);
-                refreshOnlineTab(tab == Tab.Online);
-                refreshTodoTab(tab == Tab.Todo);
-                refreshMineTab(tab == Tab.Mine);
+                refreshOfflineTab(tab == HomeTab.Offline);
+                refreshOnlineTab(tab == HomeTab.Online);
+                refreshTodoTab(tab == HomeTab.Todo);
+                refreshMineTab(tab == HomeTab.Mine);
             }
 
             @Override
@@ -150,7 +150,7 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void refreshTitleAndBackground(Tab tab) {
+    private void refreshTitleAndBackground(HomeTab tab) {
         TextView titleView = findViewById(R.id.home_title);
         View iconView = findViewById(R.id.home_title_icon);
         View mainView = findViewById(R.id.main);
@@ -194,10 +194,10 @@ public class MainActivity extends BaseActivity {
         ImageView iconView = findViewById(R.id.home_tab_offline_icon);
         TextView textView = findViewById(R.id.home_tab_offline_text);
         if (selected) {
-            iconView.setImageResource(Tab.Offline.getSel());
+            iconView.setImageResource(HomeTab.Offline.getSel());
             textView.setTextColor(getColor(R.color.home_tab_text_sel));
         } else {
-            iconView.setImageResource(Tab.Offline.getNormal());
+            iconView.setImageResource(HomeTab.Offline.getNormal());
             textView.setTextColor(getColor(R.color.home_tab_text));
         }
     }
@@ -206,10 +206,10 @@ public class MainActivity extends BaseActivity {
         ImageView iconView = findViewById(R.id.home_tab_online_icon);
         TextView textView = findViewById(R.id.home_tab_online_text);
         if (selected) {
-            iconView.setImageResource(Tab.Online.getSel());
+            iconView.setImageResource(HomeTab.Online.getSel());
             textView.setTextColor(getColor(R.color.home_tab_text_sel));
         } else {
-            iconView.setImageResource(Tab.Online.getNormal());
+            iconView.setImageResource(HomeTab.Online.getNormal());
             textView.setTextColor(getColor(R.color.home_tab_text));
         }
     }
@@ -218,10 +218,10 @@ public class MainActivity extends BaseActivity {
         ImageView iconView = findViewById(R.id.home_tab_todo_icon);
         TextView textView = findViewById(R.id.home_tab_todo_text);
         if (selected) {
-            iconView.setImageResource(Tab.Todo.getSel());
+            iconView.setImageResource(HomeTab.Todo.getSel());
             textView.setTextColor(getColor(R.color.home_tab_text_sel));
         } else {
-            iconView.setImageResource(Tab.Todo.getNormal());
+            iconView.setImageResource(HomeTab.Todo.getNormal());
             textView.setTextColor(getColor(R.color.home_tab_text));
         }
     }
@@ -230,10 +230,10 @@ public class MainActivity extends BaseActivity {
         ImageView iconView = findViewById(R.id.home_tab_mine_icon);
         TextView textView = findViewById(R.id.home_tab_mine_text);
         if (selected) {
-            iconView.setImageResource(Tab.Mine.getSel());
+            iconView.setImageResource(HomeTab.Mine.getSel());
             textView.setTextColor(getColor(R.color.home_tab_text_sel));
         } else {
-            iconView.setImageResource(Tab.Mine.getNormal());
+            iconView.setImageResource(HomeTab.Mine.getNormal());
             textView.setTextColor(getColor(R.color.home_tab_text));
         }
     }

@@ -28,7 +28,7 @@ public class MemoryDatasource implements Datasource {
             new Thread(() -> {
                 User root = new User(Mock.DEFAULT_USERNAME, Mock.DEFAULT_USER_ID, Mock.DEFAULT_USER);
                 allUsers.add(root);
-                List<ReaderActivity> readerActivities = Mock.mockList(random, root);
+                List<ReaderActivity> readerActivities = Mock.mockList(random);
                 allActivities.clear();
                 allActivities.addAll(readerActivities);
             }).start();

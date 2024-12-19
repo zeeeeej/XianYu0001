@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.yangxinyu.smkt.repository.DefaultRepository;
 import com.yangxinyu.smkt.repository.entity.ReaderActivity;
-import com.yangxinyu.smkt.ui.vo.Effect;
+import com.yangxinyu.smkt.ui.base.Effect;
 
 import java.util.ArrayList;
 import java.util.List;

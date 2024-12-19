@@ -1,4 +1,4 @@
-package com.yangxinyu.smkt.ui.vo;
+package com.yangxinyu.smkt.ui.base;
 
 /**
  * 请求数据时的状态

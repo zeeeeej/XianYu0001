@@ -5,7 +5,7 @@ import com.yangxinyu.smkt.R;
 /**
  * 主页Tab
  */
-public enum Tab {
+public enum HomeTab {
 
     Offline(R.mipmap.ic_home_tab_offline, R.mipmap.ic_home_tab_offline_sel, "offline"),
     Online(R.mipmap.ic_home_tab_online, R.mipmap.ic_home_tab_online_sel, "online"),
@@ -16,7 +16,7 @@ public enum Tab {
     private final int sel;
     private final String tag;
 
-    Tab(int normal, int sel, String tag) {
+    HomeTab(int normal, int sel, String tag) {
         this.normal = normal;
         this.sel = sel;
         this.tag = tag;

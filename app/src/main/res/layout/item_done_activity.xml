@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".MainActivity">
 
     <!-- 日期时间 -->
     <LinearLayout
@@ -17,28 +17,74 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
         android:gravity="center_vertical"
+        android:baselineAligned="true"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/activity_datetime"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text=""
-            android:textColor="#FF4D4D4D"
-            android:textSize="16sp"
-            tools:text="07月10日" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/activity_datetime_week"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/activity_item_offset"
-            android:layout_weight="1"
-            android:text=""
-            android:textColor="#FF4D4D4D"
-            android:textSize="15sp"
-            tools:text="周三" />
+            <TextView
+                android:id="@+id/activity_datetime_month"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                tools:text="07"
+                android:textColor="#FF4D4D4D"
+                android:fontFamily="@font/jinshan"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                app:layout_constraintLeft_toRightOf="@id/activity_datetime_month"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="月"
+                android:textColor="#FF4D4D4D"
+                android:fontFamily="@font/jinshan"
+                android:textSize="11sp"
+                 />
+
+            <TextView
+                app:layout_constraintLeft_toRightOf="@id/month"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/activity_datetime_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="10"
+                android:textColor="#FF4D4D4D"
+                android:fontFamily="@font/jinshan"
+                android:textSize="16sp"
+                />
+            <TextView
+                app:layout_constraintLeft_toRightOf="@id/activity_datetime_day"
+                app:layout_constraintBaseline_toBaselineOf="@id/month"
+                android:id="@+id/day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="日"
+                android:textColor="#FF4D4D4D"
+                android:fontFamily="@font/jinshan"
+                android:textSize="11sp"
+                 />
+
+            <TextView
+                android:layout_marginStart="8dp"
+                app:layout_constraintLeft_toRightOf="@id/day"
+                app:layout_constraintBaseline_toBaselineOf="@id/month"
+                android:id="@+id/activity_datetime_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="周三"
+                android:textColor="#FF4D4D4D"
+                android:fontFamily="@font/jinshan"
+                android:textSize="13sp"
+                 />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </LinearLayout>
@@ -134,6 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_item_offset"
                     android:text=""
+                    android:fontFamily="sans-serif"
                     android:textColor="#FF707070"
                     android:textSize="12sp"
                     tools:text="07.10  10:20  周三" />

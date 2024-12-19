@@ -7,7 +7,8 @@ import androidx.lifecycle.ViewModel;
 import com.yangxinyu.smkt.repository.DefaultRepository;
 import com.yangxinyu.smkt.repository.entity.ReaderActivity;
 import com.yangxinyu.smkt.repository.entity.User;
-import com.yangxinyu.smkt.ui.vo.Effect;
+import com.yangxinyu.smkt.ui.vo.Converts;
+import com.yangxinyu.smkt.ui.base.Effect;
 import com.yangxinyu.smkt.ui.vo.TodoActivityTab;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class TodoViewModel extends ViewModel {
     public void getTodoActivities(ReaderActivity.ActivityType activityType, TodoActivityTab tab) {
         resetGetTodoActivitiesEffect();
         _getTodoActivitiesEffect.postValue(Effect.Start);
-        List<ReaderActivity.ActivityClass> activityClasses = MainViewModel.todoClasses(tab);
+        List<ReaderActivity.ActivityClass> activityClasses = Converts.todoClasses(tab);
         DefaultRepository.getInstance().getTodoActivities(activityType, activityClasses, (activities) -> {
             this._todoActivities.postValue(activities);
             _getTodoActivitiesEffect.postValue(Effect.Success);
