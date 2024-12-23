@@ -1,16 +1,76 @@
 pluginManagement {
     repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
+
+
+        google() {
+            allowInsecureProtocol = true
+        }
+        mavenCentral() {
+            allowInsecureProtocol = true
+        }
+        gradlePluginPortal() {
+            allowInsecureProtocol = true
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://mirrors.tencent.com/nexus/repository/maven-public/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/google'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin'
+        }
+
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
+
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
-        mavenCentral()
-        mavenCentral()
+
+        google() {
+            allowInsecureProtocol = true
+        }
+        mavenCentral() {
+            allowInsecureProtocol = true
+        }
+        gradlePluginPortal() {
+            allowInsecureProtocol = true
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'https://mirrors.tencent.com/nexus/repository/maven-public/'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/google'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/gradle-plugin'
+        }
+
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
     }
 }
 
